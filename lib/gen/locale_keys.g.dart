@@ -1,6 +1,61 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
 abstract class  LocaleKeys {
-  static const search = 'search';
+  static const welcome = 'welcome';
+  static const authDescription = 'authDescription';
+  static const signIn = 'signIn';
+  static const registration = 'registration';
+  static const email = 'email';
+  static const login = 'login';
+  static const name = 'name';
+  static const password = 'password';
+  static const nameHint = 'nameHint';
+  static const emailHint = 'emailHint';
+  static const emailError = 'emailError';
+  static const passwordHint = 'passwordHint';
+  static const allergies = 'allergies';
+  static const allergiesDescription = 'allergiesDescription';
+  static const diets = 'diets';
+  static const dietsDescription = 'dietsDescription';
+  static const next = 'next';
+  static const celeryFree = 'celeryFree';
+  static const crustaceanFree = 'crustaceanFree';
+  static const dairyFree = 'dairyFree';
+  static const eggFree = 'eggFree';
+  static const fishFree = 'fishFree';
+  static const glutenFree = 'glutenFree';
+  static const lupineFree = 'lupineFree';
+  static const mustardFree = 'mustardFree';
+  static const peanutFree = 'peanutFree';
+  static const sesameFree = 'sesameFree';
+  static const shellfishFree = 'shellfishFree';
+  static const soyFree = 'soyFree';
+  static const treeNutFree = 'treeNutFree';
+  static const wheatFree = 'wheatFree';
+  static const FODMAPFree = 'FODMAPFree';
+  static const immunoSupportive = 'immunoSupportive';
+  static const alcoholFree = 'alcoholFree';
+  static const balanced = 'balanced';
+  static const highFiber = 'highFiber';
+  static const highProtein = 'highProtein';
+  static const keto = 'keto';
+  static const kidneyFriendly = 'kidneyFriendly';
+  static const kosher = 'kosher';
+  static const lowCarb = 'lowCarb';
+  static const lowFat = 'lowFat';
+  static const lowPotassium = 'lowPotassium';
+  static const lowSodium = 'lowSodium';
+  static const mediterranean = 'mediterranean';
+  static const noOilAdded = 'noOilAdded';
+  static const noSugar = 'noSugar';
+  static const paleo = 'paleo';
+  static const pescatarian = 'pescatarian';
+  static const porkFree = 'porkFree';
+  static const redMeatFree = 'redMeatFree';
+  static const sugarConscious = 'sugarConscious';
+  static const vegan = 'vegan';
+  static const vegetarian = 'vegetarian';
+  static const molluskFree = 'molluskFree';
+  static const sulfiteFree = 'sulfiteFree';
 
 }
