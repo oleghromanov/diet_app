@@ -5,19 +5,21 @@ import 'package:dio/dio.dart';
 class DioService {
   static const Duration timeout = Duration(seconds: 30);
 
-  static Future<Dio> getDio() async {
+  static Dio getDio()  {
     final Dio dio = Dio(
       BaseOptions(
         baseUrl: "",
         headers: {
           'Accept-Language': Platform.localeName.replaceAll(RegExp('_'), '-'),
+          'Edamam-Account-User': "Hostyy",
+          'Authorization': "Basic ZjRjNWJjYWU6ZjE4ZGJlNTc2ZDk2MjIyYzg1YTVmZWEyYjViYTNjMTA=",
         },
         sendTimeout: timeout,
         receiveTimeout: timeout,
         connectTimeout: timeout,
       ),
     );
-    dio.interceptors..add(
+    dio.interceptors.add(
       LogInterceptor(
         requestBody: true,
         responseBody: true,

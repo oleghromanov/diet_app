@@ -70,7 +70,11 @@ class CodegenLoader extends AssetLoader{
   "vegan": "Веган",
   "vegetarian": "Вегетарианец",
   "molluskFree": "Без моллюсков",
-  "sulfiteFree": "Без сульфатов"
+  "sulfiteFree": "Без сульфатов",
+  "calories": "Калории",
+  "caloriesDescription": "Выберите необходимое количество калорий",
+  "min": "мин",
+  "max": "макс"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru};
 }

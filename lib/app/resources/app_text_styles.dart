@@ -25,4 +25,11 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.error,
   );
+
+  static const TextStyle text = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w300,
+    color: AppColors.onBackground,
+  );
+
 }

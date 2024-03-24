@@ -6,6 +6,7 @@ import 'package:diet_app/domain/enums/registration_stage.dart';
 import 'package:diet_app/gen/assets.gen.dart';
 import 'package:diet_app/gen/locale_keys.g.dart';
 import 'package:diet_app/presentation/screens/registration/bloc/registration_bloc.dart';
+import 'package:diet_app/presentation/screens/registration/stages/select_calories_stage.dart';
 import 'package:diet_app/presentation/widgets/bars/progress_bar.dart';
 import 'package:diet_app/presentation/widgets/buttons/app_button.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,7 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'stages/enter_mail_stage.dart';
-
+import 'stages/select_allergies_stage.dart';
+import 'stages/select_diet_stage.dart';
 
 class RegistrationScreen extends StatefulWidget implements AutoRouteWrapper {
   const RegistrationScreen({super.key});
@@ -92,13 +94,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget _buildStage(RegistrationStage stage) {
     switch (stage) {
       case RegistrationStage.selectAllergies:
-        return const SizedBox();
+        return const SelectAllergiesStage();
       case RegistrationStage.enterMail:
         return const EnterMailStage();
       case RegistrationStage.selectDiet:
-        return const SizedBox();
+        return const SelectDietStage();
       case RegistrationStage.selectCalories:
-        return const SizedBox();
+        return const SelectCaloriesStage();
     }
   }
 

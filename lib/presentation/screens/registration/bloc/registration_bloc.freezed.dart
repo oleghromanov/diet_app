@@ -24,6 +24,9 @@ mixin _$RegistrationState {
   String get name => throw _privateConstructorUsedError;
   bool get emailValidationError => throw _privateConstructorUsedError;
   bool get continueButtonEnabled => throw _privateConstructorUsedError;
+  List<AllergyType> get allergies => throw _privateConstructorUsedError;
+  List<DietType> get diets => throw _privateConstructorUsedError;
+  CaloriesRange get calories => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RegistrationStateCopyWith<RegistrationState> get copyWith =>
@@ -44,7 +47,10 @@ abstract class $RegistrationStateCopyWith<$Res> {
       String password,
       String name,
       bool emailValidationError,
-      bool continueButtonEnabled});
+      bool continueButtonEnabled,
+      List<AllergyType> allergies,
+      List<DietType> diets,
+      CaloriesRange calories});
 }
 
 /// @nodoc
@@ -68,6 +74,9 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
     Object? name = null,
     Object? emailValidationError = null,
     Object? continueButtonEnabled = null,
+    Object? allergies = null,
+    Object? diets = null,
+    Object? calories = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -102,6 +111,18 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
           ? _value.continueButtonEnabled
           : continueButtonEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      allergies: null == allergies
+          ? _value.allergies
+          : allergies // ignore: cast_nullable_to_non_nullable
+              as List<AllergyType>,
+      diets: null == diets
+          ? _value.diets
+          : diets // ignore: cast_nullable_to_non_nullable
+              as List<DietType>,
+      calories: null == calories
+          ? _value.calories
+          : calories // ignore: cast_nullable_to_non_nullable
+              as CaloriesRange,
     ) as $Val);
   }
 }
@@ -122,7 +143,10 @@ abstract class _$$RegistrationStateImplCopyWith<$Res>
       String password,
       String name,
       bool emailValidationError,
-      bool continueButtonEnabled});
+      bool continueButtonEnabled,
+      List<AllergyType> allergies,
+      List<DietType> diets,
+      CaloriesRange calories});
 }
 
 /// @nodoc
@@ -144,6 +168,9 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
     Object? name = null,
     Object? emailValidationError = null,
     Object? continueButtonEnabled = null,
+    Object? allergies = null,
+    Object? diets = null,
+    Object? calories = null,
   }) {
     return _then(_$RegistrationStateImpl(
       isLoading: null == isLoading
@@ -178,6 +205,18 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
           ? _value.continueButtonEnabled
           : continueButtonEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      allergies: null == allergies
+          ? _value._allergies
+          : allergies // ignore: cast_nullable_to_non_nullable
+              as List<AllergyType>,
+      diets: null == diets
+          ? _value._diets
+          : diets // ignore: cast_nullable_to_non_nullable
+              as List<DietType>,
+      calories: null == calories
+          ? _value.calories
+          : calories // ignore: cast_nullable_to_non_nullable
+              as CaloriesRange,
     ));
   }
 }
@@ -193,7 +232,12 @@ class _$RegistrationStateImpl implements _RegistrationState {
       this.password = "",
       this.name = "",
       this.emailValidationError = false,
-      this.continueButtonEnabled = false});
+      this.continueButtonEnabled = false,
+      final List<AllergyType> allergies = const [],
+      final List<DietType> diets = const [],
+      this.calories = const CaloriesRange(min: 1000, max: 2000)})
+      : _allergies = allergies,
+        _diets = diets;
 
   @override
   @JsonKey()
@@ -218,10 +262,31 @@ class _$RegistrationStateImpl implements _RegistrationState {
   @override
   @JsonKey()
   final bool continueButtonEnabled;
+  final List<AllergyType> _allergies;
+  @override
+  @JsonKey()
+  List<AllergyType> get allergies {
+    if (_allergies is EqualUnmodifiableListView) return _allergies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allergies);
+  }
+
+  final List<DietType> _diets;
+  @override
+  @JsonKey()
+  List<DietType> get diets {
+    if (_diets is EqualUnmodifiableListView) return _diets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_diets);
+  }
+
+  @override
+  @JsonKey()
+  final CaloriesRange calories;
 
   @override
   String toString() {
-    return 'RegistrationState(isLoading: $isLoading, action: $action, stage: $stage, email: $email, password: $password, name: $name, emailValidationError: $emailValidationError, continueButtonEnabled: $continueButtonEnabled)';
+    return 'RegistrationState(isLoading: $isLoading, action: $action, stage: $stage, email: $email, password: $password, name: $name, emailValidationError: $emailValidationError, continueButtonEnabled: $continueButtonEnabled, allergies: $allergies, diets: $diets, calories: $calories)';
   }
 
   @override
@@ -240,12 +305,28 @@ class _$RegistrationStateImpl implements _RegistrationState {
             (identical(other.emailValidationError, emailValidationError) ||
                 other.emailValidationError == emailValidationError) &&
             (identical(other.continueButtonEnabled, continueButtonEnabled) ||
-                other.continueButtonEnabled == continueButtonEnabled));
+                other.continueButtonEnabled == continueButtonEnabled) &&
+            const DeepCollectionEquality()
+                .equals(other._allergies, _allergies) &&
+            const DeepCollectionEquality().equals(other._diets, _diets) &&
+            (identical(other.calories, calories) ||
+                other.calories == calories));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, action, stage, email,
-      password, name, emailValidationError, continueButtonEnabled);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      action,
+      stage,
+      email,
+      password,
+      name,
+      emailValidationError,
+      continueButtonEnabled,
+      const DeepCollectionEquality().hash(_allergies),
+      const DeepCollectionEquality().hash(_diets),
+      calories);
 
   @JsonKey(ignore: true)
   @override
@@ -264,7 +345,10 @@ abstract class _RegistrationState implements RegistrationState {
       final String password,
       final String name,
       final bool emailValidationError,
-      final bool continueButtonEnabled}) = _$RegistrationStateImpl;
+      final bool continueButtonEnabled,
+      final List<AllergyType> allergies,
+      final List<DietType> diets,
+      final CaloriesRange calories}) = _$RegistrationStateImpl;
 
   @override
   bool get isLoading;
@@ -283,6 +367,12 @@ abstract class _RegistrationState implements RegistrationState {
   @override
   bool get continueButtonEnabled;
   @override
+  List<AllergyType> get allergies;
+  @override
+  List<DietType> get diets;
+  @override
+  CaloriesRange get calories;
+  @override
   @JsonKey(ignore: true)
   _$$RegistrationStateImplCopyWith<_$RegistrationStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -298,6 +388,10 @@ mixin _$RegistrationEvent {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -308,6 +402,10 @@ mixin _$RegistrationEvent {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -318,6 +416,10 @@ mixin _$RegistrationEvent {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -329,6 +431,10 @@ mixin _$RegistrationEvent {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -339,6 +445,10 @@ mixin _$RegistrationEvent {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -349,6 +459,10 @@ mixin _$RegistrationEvent {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -415,6 +529,10 @@ class _$InitImpl implements Init {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) {
     return init();
   }
@@ -428,6 +546,10 @@ class _$InitImpl implements Init {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) {
     return init?.call();
   }
@@ -441,6 +563,10 @@ class _$InitImpl implements Init {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -458,6 +584,10 @@ class _$InitImpl implements Init {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) {
     return init(this);
   }
@@ -471,6 +601,10 @@ class _$InitImpl implements Init {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) {
     return init?.call(this);
   }
@@ -484,6 +618,10 @@ class _$InitImpl implements Init {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -541,6 +679,10 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) {
     return onContinueClicked();
   }
@@ -554,6 +696,10 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) {
     return onContinueClicked?.call();
   }
@@ -567,6 +713,10 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (onContinueClicked != null) {
@@ -584,6 +734,10 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) {
     return onContinueClicked(this);
   }
@@ -597,6 +751,10 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) {
     return onContinueClicked?.call(this);
   }
@@ -610,6 +768,10 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (onContinueClicked != null) {
@@ -667,6 +829,10 @@ class _$BackClickedImpl implements BackClicked {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) {
     return backClicked();
   }
@@ -680,6 +846,10 @@ class _$BackClickedImpl implements BackClicked {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) {
     return backClicked?.call();
   }
@@ -693,6 +863,10 @@ class _$BackClickedImpl implements BackClicked {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (backClicked != null) {
@@ -710,6 +884,10 @@ class _$BackClickedImpl implements BackClicked {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) {
     return backClicked(this);
   }
@@ -723,6 +901,10 @@ class _$BackClickedImpl implements BackClicked {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) {
     return backClicked?.call(this);
   }
@@ -736,6 +918,10 @@ class _$BackClickedImpl implements BackClicked {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (backClicked != null) {
@@ -819,6 +1005,10 @@ class _$EmailChangedImpl implements EmailChanged {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) {
     return emailChanged(email);
   }
@@ -832,6 +1022,10 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) {
     return emailChanged?.call(email);
   }
@@ -845,6 +1039,10 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -862,6 +1060,10 @@ class _$EmailChangedImpl implements EmailChanged {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) {
     return emailChanged(this);
   }
@@ -875,6 +1077,10 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) {
     return emailChanged?.call(this);
   }
@@ -888,6 +1094,10 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -976,6 +1186,10 @@ class _$NameChangedImpl implements NameChanged {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) {
     return nameChanged(name);
   }
@@ -989,6 +1203,10 @@ class _$NameChangedImpl implements NameChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) {
     return nameChanged?.call(name);
   }
@@ -1002,6 +1220,10 @@ class _$NameChangedImpl implements NameChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -1019,6 +1241,10 @@ class _$NameChangedImpl implements NameChanged {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) {
     return nameChanged(this);
   }
@@ -1032,6 +1258,10 @@ class _$NameChangedImpl implements NameChanged {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) {
     return nameChanged?.call(this);
   }
@@ -1045,6 +1275,10 @@ class _$NameChangedImpl implements NameChanged {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -1135,6 +1369,10 @@ class _$PasswordChangedImpl implements PasswordChanged {
     required TResult Function(String email) emailChanged,
     required TResult Function(String name) nameChanged,
     required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
   }) {
     return passwordChanged(password);
   }
@@ -1148,6 +1386,10 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String name)? nameChanged,
     TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
   }) {
     return passwordChanged?.call(password);
   }
@@ -1161,6 +1403,10 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String name)? nameChanged,
     TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -1178,6 +1424,10 @@ class _$PasswordChangedImpl implements PasswordChanged {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(NameChanged value) nameChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
   }) {
     return passwordChanged(this);
   }
@@ -1191,6 +1441,10 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(NameChanged value)? nameChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
   }) {
     return passwordChanged?.call(this);
   }
@@ -1204,6 +1458,10 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(NameChanged value)? nameChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -1220,4 +1478,736 @@ abstract class PasswordChanged implements RegistrationEvent {
   @JsonKey(ignore: true)
   _$$PasswordChangedImplCopyWith<_$PasswordChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnDietClickedImplCopyWith<$Res> {
+  factory _$$OnDietClickedImplCopyWith(
+          _$OnDietClickedImpl value, $Res Function(_$OnDietClickedImpl) then) =
+      __$$OnDietClickedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({DietType diet});
+}
+
+/// @nodoc
+class __$$OnDietClickedImplCopyWithImpl<$Res>
+    extends _$RegistrationEventCopyWithImpl<$Res, _$OnDietClickedImpl>
+    implements _$$OnDietClickedImplCopyWith<$Res> {
+  __$$OnDietClickedImplCopyWithImpl(
+      _$OnDietClickedImpl _value, $Res Function(_$OnDietClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? diet = null,
+  }) {
+    return _then(_$OnDietClickedImpl(
+      null == diet
+          ? _value.diet
+          : diet // ignore: cast_nullable_to_non_nullable
+              as DietType,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnDietClickedImpl implements OnDietClicked {
+  const _$OnDietClickedImpl(this.diet);
+
+  @override
+  final DietType diet;
+
+  @override
+  String toString() {
+    return 'RegistrationEvent.onDietClicked(diet: $diet)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnDietClickedImpl &&
+            (identical(other.diet, diet) || other.diet == diet));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, diet);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnDietClickedImplCopyWith<_$OnDietClickedImpl> get copyWith =>
+      __$$OnDietClickedImplCopyWithImpl<_$OnDietClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() onContinueClicked,
+    required TResult Function() backClicked,
+    required TResult Function(String email) emailChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
+  }) {
+    return onDietClicked(diet);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? onContinueClicked,
+    TResult? Function()? backClicked,
+    TResult? Function(String email)? emailChanged,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
+  }) {
+    return onDietClicked?.call(diet);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? onContinueClicked,
+    TResult Function()? backClicked,
+    TResult Function(String email)? emailChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onDietClicked != null) {
+      return onDietClicked(diet);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(OnContinueClicked value) onContinueClicked,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(EmailChanged value) emailChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+  }) {
+    return onDietClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(OnContinueClicked value)? onContinueClicked,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(EmailChanged value)? emailChanged,
+    TResult? Function(NameChanged value)? nameChanged,
+    TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+  }) {
+    return onDietClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(OnContinueClicked value)? onContinueClicked,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onDietClicked != null) {
+      return onDietClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnDietClicked implements RegistrationEvent {
+  const factory OnDietClicked(final DietType diet) = _$OnDietClickedImpl;
+
+  DietType get diet;
+  @JsonKey(ignore: true)
+  _$$OnDietClickedImplCopyWith<_$OnDietClickedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnAllergyClickedImplCopyWith<$Res> {
+  factory _$$OnAllergyClickedImplCopyWith(_$OnAllergyClickedImpl value,
+          $Res Function(_$OnAllergyClickedImpl) then) =
+      __$$OnAllergyClickedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({AllergyType allergy});
+}
+
+/// @nodoc
+class __$$OnAllergyClickedImplCopyWithImpl<$Res>
+    extends _$RegistrationEventCopyWithImpl<$Res, _$OnAllergyClickedImpl>
+    implements _$$OnAllergyClickedImplCopyWith<$Res> {
+  __$$OnAllergyClickedImplCopyWithImpl(_$OnAllergyClickedImpl _value,
+      $Res Function(_$OnAllergyClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? allergy = null,
+  }) {
+    return _then(_$OnAllergyClickedImpl(
+      null == allergy
+          ? _value.allergy
+          : allergy // ignore: cast_nullable_to_non_nullable
+              as AllergyType,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnAllergyClickedImpl implements OnAllergyClicked {
+  const _$OnAllergyClickedImpl(this.allergy);
+
+  @override
+  final AllergyType allergy;
+
+  @override
+  String toString() {
+    return 'RegistrationEvent.onAllergyClicked(allergy: $allergy)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnAllergyClickedImpl &&
+            (identical(other.allergy, allergy) || other.allergy == allergy));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, allergy);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnAllergyClickedImplCopyWith<_$OnAllergyClickedImpl> get copyWith =>
+      __$$OnAllergyClickedImplCopyWithImpl<_$OnAllergyClickedImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() onContinueClicked,
+    required TResult Function() backClicked,
+    required TResult Function(String email) emailChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
+  }) {
+    return onAllergyClicked(allergy);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? onContinueClicked,
+    TResult? Function()? backClicked,
+    TResult? Function(String email)? emailChanged,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
+  }) {
+    return onAllergyClicked?.call(allergy);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? onContinueClicked,
+    TResult Function()? backClicked,
+    TResult Function(String email)? emailChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onAllergyClicked != null) {
+      return onAllergyClicked(allergy);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(OnContinueClicked value) onContinueClicked,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(EmailChanged value) emailChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+  }) {
+    return onAllergyClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(OnContinueClicked value)? onContinueClicked,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(EmailChanged value)? emailChanged,
+    TResult? Function(NameChanged value)? nameChanged,
+    TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+  }) {
+    return onAllergyClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(OnContinueClicked value)? onContinueClicked,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onAllergyClicked != null) {
+      return onAllergyClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnAllergyClicked implements RegistrationEvent {
+  const factory OnAllergyClicked(final AllergyType allergy) =
+      _$OnAllergyClickedImpl;
+
+  AllergyType get allergy;
+  @JsonKey(ignore: true)
+  _$$OnAllergyClickedImplCopyWith<_$OnAllergyClickedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnMinCaloriesChangedImplCopyWith<$Res> {
+  factory _$$OnMinCaloriesChangedImplCopyWith(_$OnMinCaloriesChangedImpl value,
+          $Res Function(_$OnMinCaloriesChangedImpl) then) =
+      __$$OnMinCaloriesChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? min});
+}
+
+/// @nodoc
+class __$$OnMinCaloriesChangedImplCopyWithImpl<$Res>
+    extends _$RegistrationEventCopyWithImpl<$Res, _$OnMinCaloriesChangedImpl>
+    implements _$$OnMinCaloriesChangedImplCopyWith<$Res> {
+  __$$OnMinCaloriesChangedImplCopyWithImpl(_$OnMinCaloriesChangedImpl _value,
+      $Res Function(_$OnMinCaloriesChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? min = freezed,
+  }) {
+    return _then(_$OnMinCaloriesChangedImpl(
+      freezed == min
+          ? _value.min
+          : min // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
+  const _$OnMinCaloriesChangedImpl(this.min);
+
+  @override
+  final int? min;
+
+  @override
+  String toString() {
+    return 'RegistrationEvent.onMinCaloriesChanged(min: $min)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnMinCaloriesChangedImpl &&
+            (identical(other.min, min) || other.min == min));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, min);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnMinCaloriesChangedImplCopyWith<_$OnMinCaloriesChangedImpl>
+      get copyWith =>
+          __$$OnMinCaloriesChangedImplCopyWithImpl<_$OnMinCaloriesChangedImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() onContinueClicked,
+    required TResult Function() backClicked,
+    required TResult Function(String email) emailChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
+  }) {
+    return onMinCaloriesChanged(min);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? onContinueClicked,
+    TResult? Function()? backClicked,
+    TResult? Function(String email)? emailChanged,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
+  }) {
+    return onMinCaloriesChanged?.call(min);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? onContinueClicked,
+    TResult Function()? backClicked,
+    TResult Function(String email)? emailChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onMinCaloriesChanged != null) {
+      return onMinCaloriesChanged(min);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(OnContinueClicked value) onContinueClicked,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(EmailChanged value) emailChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+  }) {
+    return onMinCaloriesChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(OnContinueClicked value)? onContinueClicked,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(EmailChanged value)? emailChanged,
+    TResult? Function(NameChanged value)? nameChanged,
+    TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+  }) {
+    return onMinCaloriesChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(OnContinueClicked value)? onContinueClicked,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onMinCaloriesChanged != null) {
+      return onMinCaloriesChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnMinCaloriesChanged implements RegistrationEvent {
+  const factory OnMinCaloriesChanged(final int? min) =
+      _$OnMinCaloriesChangedImpl;
+
+  int? get min;
+  @JsonKey(ignore: true)
+  _$$OnMinCaloriesChangedImplCopyWith<_$OnMinCaloriesChangedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnMaxCaloriesChangedImplCopyWith<$Res> {
+  factory _$$OnMaxCaloriesChangedImplCopyWith(_$OnMaxCaloriesChangedImpl value,
+          $Res Function(_$OnMaxCaloriesChangedImpl) then) =
+      __$$OnMaxCaloriesChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? max});
+}
+
+/// @nodoc
+class __$$OnMaxCaloriesChangedImplCopyWithImpl<$Res>
+    extends _$RegistrationEventCopyWithImpl<$Res, _$OnMaxCaloriesChangedImpl>
+    implements _$$OnMaxCaloriesChangedImplCopyWith<$Res> {
+  __$$OnMaxCaloriesChangedImplCopyWithImpl(_$OnMaxCaloriesChangedImpl _value,
+      $Res Function(_$OnMaxCaloriesChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? max = freezed,
+  }) {
+    return _then(_$OnMaxCaloriesChangedImpl(
+      freezed == max
+          ? _value.max
+          : max // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
+  const _$OnMaxCaloriesChangedImpl(this.max);
+
+  @override
+  final int? max;
+
+  @override
+  String toString() {
+    return 'RegistrationEvent.onMaxCaloriesChanged(max: $max)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnMaxCaloriesChangedImpl &&
+            (identical(other.max, max) || other.max == max));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, max);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnMaxCaloriesChangedImplCopyWith<_$OnMaxCaloriesChangedImpl>
+      get copyWith =>
+          __$$OnMaxCaloriesChangedImplCopyWithImpl<_$OnMaxCaloriesChangedImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() onContinueClicked,
+    required TResult Function() backClicked,
+    required TResult Function(String email) emailChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
+  }) {
+    return onMaxCaloriesChanged(max);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? onContinueClicked,
+    TResult? Function()? backClicked,
+    TResult? Function(String email)? emailChanged,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
+  }) {
+    return onMaxCaloriesChanged?.call(max);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? onContinueClicked,
+    TResult Function()? backClicked,
+    TResult Function(String email)? emailChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onMaxCaloriesChanged != null) {
+      return onMaxCaloriesChanged(max);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(OnContinueClicked value) onContinueClicked,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(EmailChanged value) emailChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+  }) {
+    return onMaxCaloriesChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(OnContinueClicked value)? onContinueClicked,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(EmailChanged value)? emailChanged,
+    TResult? Function(NameChanged value)? nameChanged,
+    TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+  }) {
+    return onMaxCaloriesChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(OnContinueClicked value)? onContinueClicked,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    required TResult orElse(),
+  }) {
+    if (onMaxCaloriesChanged != null) {
+      return onMaxCaloriesChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnMaxCaloriesChanged implements RegistrationEvent {
+  const factory OnMaxCaloriesChanged(final int? max) =
+      _$OnMaxCaloriesChangedImpl;
+
+  int? get max;
+  @JsonKey(ignore: true)
+  _$$OnMaxCaloriesChangedImplCopyWith<_$OnMaxCaloriesChangedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -14,9 +14,9 @@ class EnterMailStage extends StatefulWidget {
 }
 
 class _EnterMailStageState extends State<EnterMailStage> {
-  late TextEditingController nameController;
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -67,36 +67,50 @@ class _EnterMailStageState extends State<EnterMailStage> {
         style: AppTextStyles.description,
       );
 
-  Widget _buildNameInput() => AppInput(
-        hintText: LocaleKeys.nameHint.tr(),
-        onChanged: (name) {
-          context.read<RegistrationBloc>().add(RegistrationEvent.nameChanged(name));
-        },
+  Widget _buildNameInput() => BlocBuilder<RegistrationBloc, RegistrationState>(
+        buildWhen: (previous, current) => previous.name != current.name,
+        builder: (context, state) => AppInput(
+          controller: nameController..text = state.name,
+          hintText: LocaleKeys.nameHint.tr(),
+          onChanged: (name) {
+            context.read<RegistrationBloc>().add(RegistrationEvent.nameChanged(name));
+          },
+        ),
       );
 
   Widget _buildEmailError() => BlocBuilder<RegistrationBloc, RegistrationState>(
         buildWhen: (previous, current) => previous.emailValidationError != current.emailValidationError,
-        builder: (context, state) => state.emailValidationError? Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text(
-            LocaleKeys.emailError.tr(),
-            style: AppTextStyles.error,
-          ),
-        ) : const SizedBox(),
+        builder: (context, state) => state.emailValidationError
+            ? Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  LocaleKeys.emailError.tr(),
+                  style: AppTextStyles.error,
+                ),
+              )
+            : const SizedBox(),
       );
 
-  Widget _buildEmailInput() => AppInput(
-        hintText: LocaleKeys.emailHint.tr(),
-        onChanged: (name) {
-           context.read<RegistrationBloc>().add(RegistrationEvent.emailChanged(name));
-        },
+  Widget _buildEmailInput() => BlocBuilder<RegistrationBloc, RegistrationState>(
+        buildWhen: (previous, current) => previous.email != current.email,
+        builder: (context, state) => AppInput(
+          controller: emailController..text = state.email,
+          hintText: LocaleKeys.emailHint.tr(),
+          onChanged: (name) {
+            context.read<RegistrationBloc>().add(RegistrationEvent.emailChanged(name));
+          },
+        ),
       );
 
-  Widget _buildPassInput() => AppInput(
-        hintText: LocaleKeys.passwordHint.tr(),
-        onChanged: (name) {
-          context.read<RegistrationBloc>().add(RegistrationEvent.passwordChanged(name));
-        },
-        obscureText: true,
+  Widget _buildPassInput() => BlocBuilder<RegistrationBloc, RegistrationState>(
+        buildWhen: (previous, current) => previous.password != current.password,
+        builder: (context, state) => AppInput(
+          controller: passwordController..text = state.password,
+          hintText: LocaleKeys.passwordHint.tr(),
+          onChanged: (name) {
+            context.read<RegistrationBloc>().add(RegistrationEvent.passwordChanged(name));
+          },
+          obscureText: true,
+        ),
       );
 }

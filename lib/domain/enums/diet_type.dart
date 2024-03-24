@@ -36,7 +36,7 @@ extension DietTypeExt on DietType {
       case DietType.balanced:
         return LocaleKeys.balanced.tr();
       case DietType.DASH:
-        return DietType.DASH.toString();
+        return DietType.DASH.name;
       case DietType.highFiber:
         return LocaleKeys.highFiber.tr();
       case DietType.highProtein:
@@ -79,5 +79,59 @@ extension DietTypeExt on DietType {
         return LocaleKeys.molluskFree.tr();
       case DietType.sulfiteFree:
         return LocaleKeys.sulfiteFree.tr();
-    }  }
+    }
+  }
+
+  String get apiName {
+    switch (this) {
+      case DietType.alcoholFree:
+        return 'alcohol-free';
+      case DietType.balanced:
+        return 'balanced';
+      case DietType.DASH:
+        return 'DASH';
+      case DietType.highFiber:
+        return 'high-fiber';
+      case DietType.highProtein:
+        return 'high-protein';
+      case DietType.keto:
+        return 'keto-friendly';
+      case DietType.kidneyFriendly:
+        return 'kidney-friendly';
+      case DietType.kosher:
+        return 'kosher';
+      case DietType.lowCarb:
+        return 'low-carb';
+      case DietType.lowFat:
+        return 'low-fat';
+      case DietType.lowPotassium:
+        return 'low-potassium';
+      case DietType.lowSodium:
+        return 'low-sodium';
+      case DietType.mediterranean:
+        return 'Mediterranean';
+      case DietType.noOilAdded:
+        return 'No-oil-added';
+      case DietType.noSugar:
+        return 'no-sugar';
+      case DietType.paleo:
+        return 'paleo';
+      case DietType.pescatarian:
+        return 'pescatarian';
+      case DietType.porkFree:
+        return 'pork-free';
+      case DietType.redMeatFree:
+        return 'red-meat-free';
+      case DietType.sugarConscious:
+        return 'sugar-conscious';
+      case DietType.vegan:
+        return 'vegan';
+      case DietType.vegetarian:
+        return 'vegetarian';
+      case DietType.molluskFree:
+        return 'mollusk-free';
+      case DietType.sulfiteFree:
+        return 'sulfite-free';
+    }
+  }
 }

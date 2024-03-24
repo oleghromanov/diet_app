@@ -11,5 +11,8 @@ class RegistrationState with _$RegistrationState {
     @Default("") String name,
     @Default(false) bool emailValidationError,
     @Default(false) bool continueButtonEnabled,
+    @Default([]) List<AllergyType> allergies,
+    @Default([]) List<DietType> diets,
+    @Default(CaloriesRange(min: 1000, max: 2000)) CaloriesRange calories
   }) = _RegistrationState;
 }

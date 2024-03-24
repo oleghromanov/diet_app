@@ -1,3 +1,4 @@
+
 import 'package:diet_app/gen/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -70,6 +71,43 @@ extension AllergyTypeExt on AllergyType {
 
       case AllergyType.immunoSupportive:
         return LocaleKeys.immunoSupportive.tr();
+    }
+  }
+
+  String get apiName {
+    switch (this) {
+      case AllergyType.celeryFree:
+        return 'celery-free';
+      case AllergyType.crustaceanFree:
+        return 'crustacean-free';
+      case AllergyType.dairyFree:
+        return 'dairy-free';
+      case AllergyType.eggFree:
+        return 'egg-free';
+      case AllergyType.fishFree:
+        return 'fish-free';
+      case AllergyType.glutenFree:
+        return 'gluten-free';
+      case AllergyType.lupineFree:
+        return 'lupine-free';
+      case AllergyType.mustardFree:
+        return 'mustard-free';
+      case AllergyType.peanutFree:
+        return 'peanut-free';
+      case AllergyType.sesameFree:
+        return 'sesame-free';
+      case AllergyType.shellfishFree:
+        return 'shellfish-free';
+      case AllergyType.soyFree:
+        return 'soy-free';
+      case AllergyType.treeNutFree:
+        return 'tree-nut-free';
+      case AllergyType.wheatFree:
+        return 'wheat-free';
+      case AllergyType.FODMAPFree:
+        return 'fodmap-free';
+      case AllergyType.immunoSupportive:
+        return 'immuno-supportive';
     }
   }
 }

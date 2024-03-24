@@ -57,5 +57,9 @@ abstract class  LocaleKeys {
   static const vegetarian = 'vegetarian';
   static const molluskFree = 'molluskFree';
   static const sulfiteFree = 'sulfiteFree';
+  static const calories = 'calories';
+  static const caloriesDescription = 'caloriesDescription';
+  static const min = 'min';
+  static const max = 'max';
 
 }
