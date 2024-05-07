@@ -3,4 +3,5 @@ enum RegistrationStage {
   selectAllergies,
   selectDiet,
   selectCalories,
+  selectDays,
 }

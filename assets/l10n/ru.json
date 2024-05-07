@@ -80,5 +80,7 @@
   "goToWebsite" : "Перейти на сайт",
   "changePlan" : "Изменить план",
   "logout" : "Выйти",
-  "instruction" : "Инструкция"
+  "instruction" : "Инструкция",
+  "countDays" : "Количество дней",
+  "countDaysDescription" : "Выберите количество дней (до 10)"
 }

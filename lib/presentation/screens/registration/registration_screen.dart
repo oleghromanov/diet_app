@@ -9,6 +9,7 @@ import 'package:diet_app/gen/assets.gen.dart';
 import 'package:diet_app/gen/locale_keys.g.dart';
 import 'package:diet_app/presentation/screens/registration/bloc/registration_bloc.dart';
 import 'package:diet_app/presentation/screens/registration/stages/select_calories_stage.dart';
+import 'package:diet_app/presentation/screens/registration/stages/select_days_stage.dart';
 import 'package:diet_app/presentation/widgets/bars/progress_bar.dart';
 import 'package:diet_app/presentation/widgets/buttons/app_button.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -108,6 +109,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         return const SelectDietStage();
       case RegistrationStage.selectCalories:
         return const SelectCaloriesStage();
+      case RegistrationStage.selectDays:
+        return const SelectDaysStage();
     }
   }
 

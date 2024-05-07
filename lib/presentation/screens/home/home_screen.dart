@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           AppAction? action = state.action;
           if (action is NavigationAction) {
             if (action.routeName == RegistrationRouter.name) {
-              context.router.pushAndPopUntil(RegistrationRouter(user: action.data), predicate: (_) => false);
+              context.router.push(RegistrationRouter(user: action.data));
             } else if (action.routeName == AuthRouter.name) {
               context.router.pushAndPopUntil(const AuthRouter(), predicate: (_) => false);
             }

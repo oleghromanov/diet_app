@@ -96,7 +96,9 @@ class CodegenLoader extends AssetLoader{
   "goToWebsite": "Перейти на сайт",
   "changePlan": "Изменить план",
   "logout": "Выйти",
-  "instruction": "Инструкция"
+  "instruction": "Инструкция",
+  "countDays": "Количество дней",
+  "countDaysDescription": "Выберите количество дней (до 10)"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru};
 }

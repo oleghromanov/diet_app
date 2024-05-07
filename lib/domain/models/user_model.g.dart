@@ -18,6 +18,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       diets: (json['diets'] as List<dynamic>)
           .map((e) => $enumDecode(_$DietTypeEnumMap, e))
           .toList(),
+      countDays: json['countDays'] as int,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -27,6 +28,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'allergies':
           instance.allergies.map((e) => _$AllergyTypeEnumMap[e]!).toList(),
       'diets': instance.diets.map((e) => _$DietTypeEnumMap[e]!).toList(),
+      'countDays': instance.countDays,
     };
 
 const _$AllergyTypeEnumMap = {

@@ -56,25 +56,14 @@ class AuthRepository {
   }
 
   Future<Either<bool, AppError>> signUp({
-    required String name,
-    required String email,
-    required List<DayPlanModel> plan,
-    required List<AllergyType> allergies,
-    required List<DietType> diets,
+    required UserModel user,
   }) async {
     try {
-      UserModel user = UserModel(
-        name: name,
-        email: email,
-        mealPlan: plan,
-        allergies: allergies,
-        diets: diets,
-      );
       final collection = FirebaseFirestore.instance.collection('users').withConverter<UserModel>(
             fromFirestore: (snapshots, _) => UserModel.fromJson(snapshots.data()!),
             toFirestore: (result, _) => result.toJson(),
           );
-      final result = await collection.where('email', isEqualTo: email).get();
+      final result = await collection.where('email', isEqualTo: user.email).get();
 
       if (result.docs.isNotEmpty) {
         collection.doc(result.docs.first.id).update(user.toJson());

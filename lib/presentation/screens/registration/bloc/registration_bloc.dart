@@ -38,6 +38,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     on<OnAllergyClicked>(_onAllergyClicked);
     on<OnMaxCaloriesChanged>(_onMaxCaloriesChanged);
     on<OnMinCaloriesChanged>(_onMinCaloriesChanged);
+    on<OnDaysChanged>(_onDaysChanged);
     add(const RegistrationEvent.init());
   }
 
@@ -59,21 +60,21 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       case RegistrationStage.selectDiet:
         return state.diets.isNotEmpty;
       case RegistrationStage.selectCalories:
-        return state.calories.min != null && state.calories.max != null;
+        return state.calories.min != null && state.calories.max != null && state.calories.max! > state.calories.min!;
+      case RegistrationStage.selectDays:
+        return state.countDays != null;
     }
   }
 
   FutureOr<void> _init(Init event, Emitter<RegistrationState> emit) async {
     if (user != null) {
-      emit(
-        state.copyWith(
-          stage: RegistrationStage.selectAllergies,
-          email: user!.email,
-          name: user!.name,
-          allergies: user!.allergies,
-          diets: user!.diets,
-        )
-      );
+      emit(state.copyWith(
+        stage: RegistrationStage.selectAllergies,
+        email: user!.email,
+        name: user!.name,
+        allergies: user!.allergies,
+        diets: user!.diets,
+      ));
     }
   }
 
@@ -99,7 +100,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       } else {
         emit(state.copyWith(action: ShowSnackBar(error!.errorMessage ?? 'Error')));
       }
-    } else if (state.stage == RegistrationStage.selectCalories) {
+    } else if (state.stage == RegistrationStage.selectDays) {
       emit(state.copyWith(isLoading: true));
       await _createPlan(emit);
       emit(state.copyWith(isLoading: false));
@@ -117,10 +118,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     List<DayPlan>? plans;
     AppError? error;
     final result = await nutritionRepository.createPlan(
-      allergies: state.allergies,
-      diets: state.diets,
-      calories: state.calories,
-    );
+        allergies: state.allergies, diets: state.diets, calories: state.calories, size: state.countDays ?? 7);
     result.fold(
       (data) => plans = data,
       (e) => error = e,
@@ -163,7 +161,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         }
         await _signUpUser(plans, emit);
         emit(state.copyWith(mealPlan: plans));
-        emit(state.copyWith(action: NavigationAction(routeName: NavigationRouter.name, data: plans)));
+        emit(state.copyWith(action: NavigationAction(routeName: NavigationRouter.name)));
       }
     }
   }
@@ -197,19 +195,27 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   FutureOr<void> _signUpUser(List<DayPlanModel> plans, Emitter<RegistrationState> emit) async {
     bool success = false;
     AppError? error;
-    final result = await authRepository.signUp(
+    UserModel user = UserModel(
       email: state.email,
       name: state.name,
-      plan: plans,
+      mealPlan: plans,
       allergies: state.allergies,
       diets: state.diets,
+      countDays: state.countDays ?? 7,
     );
+    final result = await authRepository.signUp(user: user);
 
     result.fold(
       (data) => success = data,
       (e) => error = e,
     );
-    if (success) await secureLocalStorage.setEmail(state.email);
+
+    if (success) {
+      await secureLocalStorage.setEmail(state.email);
+    } else {
+      emit(state.copyWith(action: ShowSnackBar(error!.errorMessage ?? 'Error')));
+    }
+    ;
   }
 
   FutureOr<void> _emailChanged(EmailChanged event, Emitter<RegistrationState> emit) {
@@ -252,13 +258,21 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       allergies.add(event.allergy);
     }
     emit(state.copyWith(allergies: allergies, continueButtonEnabled: allergies.isNotEmpty));
+    emit(state.copyWith(continueButtonEnabled: _continueButtonEnabled));
   }
 
   FutureOr<void> _onMaxCaloriesChanged(OnMaxCaloriesChanged event, Emitter<RegistrationState> emit) {
-    emit(state.copyWith(calories: CaloriesRange(min: state.calories.min, max: event.max), continueButtonEnabled: true));
+    emit(state.copyWith(calories: CaloriesRange(min: state.calories.min, max: event.max)));
+    emit(state.copyWith(continueButtonEnabled: _continueButtonEnabled));
   }
 
   FutureOr<void> _onMinCaloriesChanged(OnMinCaloriesChanged event, Emitter<RegistrationState> emit) {
-    emit(state.copyWith(calories: CaloriesRange(min: event.min, max: state.calories.max), continueButtonEnabled: true));
+    emit(state.copyWith(calories: CaloriesRange(min: event.min, max: state.calories.max)));
+    emit(state.copyWith(continueButtonEnabled: _continueButtonEnabled));
+  }
+
+  FutureOr<void> _onDaysChanged(OnDaysChanged event, Emitter<RegistrationState> emit) {
+    emit(state.copyWith(countDays: event.countDays));
+    emit(state.copyWith(continueButtonEnabled: _continueButtonEnabled));
   }
 }

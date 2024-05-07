@@ -78,5 +78,7 @@ abstract class  LocaleKeys {
   static const changePlan = 'changePlan';
   static const logout = 'logout';
   static const instruction = 'instruction';
+  static const countDays = 'countDays';
+  static const countDaysDescription = 'countDaysDescription';
 
 }

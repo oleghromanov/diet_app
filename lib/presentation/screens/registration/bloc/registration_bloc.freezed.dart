@@ -27,6 +27,7 @@ mixin _$RegistrationState {
   bool get continueButtonEnabled => throw _privateConstructorUsedError;
   List<AllergyType> get allergies => throw _privateConstructorUsedError;
   List<DietType> get diets => throw _privateConstructorUsedError;
+  int? get countDays => throw _privateConstructorUsedError;
   CaloriesRange get calories => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -52,6 +53,7 @@ abstract class $RegistrationStateCopyWith<$Res> {
       bool continueButtonEnabled,
       List<AllergyType> allergies,
       List<DietType> diets,
+      int? countDays,
       CaloriesRange calories});
 }
 
@@ -79,6 +81,7 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
     Object? continueButtonEnabled = null,
     Object? allergies = null,
     Object? diets = null,
+    Object? countDays = freezed,
     Object? calories = null,
   }) {
     return _then(_value.copyWith(
@@ -126,6 +129,10 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
           ? _value.diets
           : diets // ignore: cast_nullable_to_non_nullable
               as List<DietType>,
+      countDays: freezed == countDays
+          ? _value.countDays
+          : countDays // ignore: cast_nullable_to_non_nullable
+              as int?,
       calories: null == calories
           ? _value.calories
           : calories // ignore: cast_nullable_to_non_nullable
@@ -154,6 +161,7 @@ abstract class _$$RegistrationStateImplCopyWith<$Res>
       bool continueButtonEnabled,
       List<AllergyType> allergies,
       List<DietType> diets,
+      int? countDays,
       CaloriesRange calories});
 }
 
@@ -179,6 +187,7 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
     Object? continueButtonEnabled = null,
     Object? allergies = null,
     Object? diets = null,
+    Object? countDays = freezed,
     Object? calories = null,
   }) {
     return _then(_$RegistrationStateImpl(
@@ -226,6 +235,10 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
           ? _value._diets
           : diets // ignore: cast_nullable_to_non_nullable
               as List<DietType>,
+      countDays: freezed == countDays
+          ? _value.countDays
+          : countDays // ignore: cast_nullable_to_non_nullable
+              as int?,
       calories: null == calories
           ? _value.calories
           : calories // ignore: cast_nullable_to_non_nullable
@@ -249,6 +262,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
       this.continueButtonEnabled = false,
       final List<AllergyType> allergies = const [],
       final List<DietType> diets = const [],
+      this.countDays = 7,
       this.calories = const CaloriesRange(min: 1000, max: 2000)})
       : _mealPlan = mealPlan,
         _allergies = allergies,
@@ -306,11 +320,14 @@ class _$RegistrationStateImpl implements _RegistrationState {
 
   @override
   @JsonKey()
+  final int? countDays;
+  @override
+  @JsonKey()
   final CaloriesRange calories;
 
   @override
   String toString() {
-    return 'RegistrationState(isLoading: $isLoading, action: $action, stage: $stage, email: $email, password: $password, name: $name, mealPlan: $mealPlan, emailValidationError: $emailValidationError, continueButtonEnabled: $continueButtonEnabled, allergies: $allergies, diets: $diets, calories: $calories)';
+    return 'RegistrationState(isLoading: $isLoading, action: $action, stage: $stage, email: $email, password: $password, name: $name, mealPlan: $mealPlan, emailValidationError: $emailValidationError, continueButtonEnabled: $continueButtonEnabled, allergies: $allergies, diets: $diets, countDays: $countDays, calories: $calories)';
   }
 
   @override
@@ -334,6 +351,8 @@ class _$RegistrationStateImpl implements _RegistrationState {
             const DeepCollectionEquality()
                 .equals(other._allergies, _allergies) &&
             const DeepCollectionEquality().equals(other._diets, _diets) &&
+            (identical(other.countDays, countDays) ||
+                other.countDays == countDays) &&
             (identical(other.calories, calories) ||
                 other.calories == calories));
   }
@@ -352,6 +371,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
       continueButtonEnabled,
       const DeepCollectionEquality().hash(_allergies),
       const DeepCollectionEquality().hash(_diets),
+      countDays,
       calories);
 
   @JsonKey(ignore: true)
@@ -375,6 +395,7 @@ abstract class _RegistrationState implements RegistrationState {
       final bool continueButtonEnabled,
       final List<AllergyType> allergies,
       final List<DietType> diets,
+      final int? countDays,
       final CaloriesRange calories}) = _$RegistrationStateImpl;
 
   @override
@@ -400,6 +421,8 @@ abstract class _RegistrationState implements RegistrationState {
   @override
   List<DietType> get diets;
   @override
+  int? get countDays;
+  @override
   CaloriesRange get calories;
   @override
   @JsonKey(ignore: true)
@@ -421,6 +444,7 @@ mixin _$RegistrationEvent {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -435,6 +459,7 @@ mixin _$RegistrationEvent {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -449,6 +474,7 @@ mixin _$RegistrationEvent {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -464,6 +490,7 @@ mixin _$RegistrationEvent {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -478,6 +505,7 @@ mixin _$RegistrationEvent {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -492,6 +520,7 @@ mixin _$RegistrationEvent {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -562,6 +591,7 @@ class _$InitImpl implements Init {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return init();
   }
@@ -579,6 +609,7 @@ class _$InitImpl implements Init {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return init?.call();
   }
@@ -596,6 +627,7 @@ class _$InitImpl implements Init {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -617,6 +649,7 @@ class _$InitImpl implements Init {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return init(this);
   }
@@ -634,6 +667,7 @@ class _$InitImpl implements Init {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return init?.call(this);
   }
@@ -651,6 +685,7 @@ class _$InitImpl implements Init {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -712,6 +747,7 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return onContinueClicked();
   }
@@ -729,6 +765,7 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return onContinueClicked?.call();
   }
@@ -746,6 +783,7 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onContinueClicked != null) {
@@ -767,6 +805,7 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return onContinueClicked(this);
   }
@@ -784,6 +823,7 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return onContinueClicked?.call(this);
   }
@@ -801,6 +841,7 @@ class _$OnContinueClickedImpl implements OnContinueClicked {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onContinueClicked != null) {
@@ -862,6 +903,7 @@ class _$BackClickedImpl implements BackClicked {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return backClicked();
   }
@@ -879,6 +921,7 @@ class _$BackClickedImpl implements BackClicked {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return backClicked?.call();
   }
@@ -896,6 +939,7 @@ class _$BackClickedImpl implements BackClicked {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (backClicked != null) {
@@ -917,6 +961,7 @@ class _$BackClickedImpl implements BackClicked {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return backClicked(this);
   }
@@ -934,6 +979,7 @@ class _$BackClickedImpl implements BackClicked {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return backClicked?.call(this);
   }
@@ -951,6 +997,7 @@ class _$BackClickedImpl implements BackClicked {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (backClicked != null) {
@@ -1038,6 +1085,7 @@ class _$EmailChangedImpl implements EmailChanged {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return emailChanged(email);
   }
@@ -1055,6 +1103,7 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return emailChanged?.call(email);
   }
@@ -1072,6 +1121,7 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -1093,6 +1143,7 @@ class _$EmailChangedImpl implements EmailChanged {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return emailChanged(this);
   }
@@ -1110,6 +1161,7 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return emailChanged?.call(this);
   }
@@ -1127,6 +1179,7 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -1219,6 +1272,7 @@ class _$NameChangedImpl implements NameChanged {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return nameChanged(name);
   }
@@ -1236,6 +1290,7 @@ class _$NameChangedImpl implements NameChanged {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return nameChanged?.call(name);
   }
@@ -1253,6 +1308,7 @@ class _$NameChangedImpl implements NameChanged {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -1274,6 +1330,7 @@ class _$NameChangedImpl implements NameChanged {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return nameChanged(this);
   }
@@ -1291,6 +1348,7 @@ class _$NameChangedImpl implements NameChanged {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return nameChanged?.call(this);
   }
@@ -1308,6 +1366,7 @@ class _$NameChangedImpl implements NameChanged {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -1402,6 +1461,7 @@ class _$PasswordChangedImpl implements PasswordChanged {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return passwordChanged(password);
   }
@@ -1419,6 +1479,7 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return passwordChanged?.call(password);
   }
@@ -1436,6 +1497,7 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -1457,6 +1519,7 @@ class _$PasswordChangedImpl implements PasswordChanged {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return passwordChanged(this);
   }
@@ -1474,6 +1537,7 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return passwordChanged?.call(this);
   }
@@ -1491,6 +1555,7 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -1583,6 +1648,7 @@ class _$OnDietClickedImpl implements OnDietClicked {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return onDietClicked(diet);
   }
@@ -1600,6 +1666,7 @@ class _$OnDietClickedImpl implements OnDietClicked {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return onDietClicked?.call(diet);
   }
@@ -1617,6 +1684,7 @@ class _$OnDietClickedImpl implements OnDietClicked {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onDietClicked != null) {
@@ -1638,6 +1706,7 @@ class _$OnDietClickedImpl implements OnDietClicked {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return onDietClicked(this);
   }
@@ -1655,6 +1724,7 @@ class _$OnDietClickedImpl implements OnDietClicked {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return onDietClicked?.call(this);
   }
@@ -1672,6 +1742,7 @@ class _$OnDietClickedImpl implements OnDietClicked {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onDietClicked != null) {
@@ -1765,6 +1836,7 @@ class _$OnAllergyClickedImpl implements OnAllergyClicked {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return onAllergyClicked(allergy);
   }
@@ -1782,6 +1854,7 @@ class _$OnAllergyClickedImpl implements OnAllergyClicked {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return onAllergyClicked?.call(allergy);
   }
@@ -1799,6 +1872,7 @@ class _$OnAllergyClickedImpl implements OnAllergyClicked {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onAllergyClicked != null) {
@@ -1820,6 +1894,7 @@ class _$OnAllergyClickedImpl implements OnAllergyClicked {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return onAllergyClicked(this);
   }
@@ -1837,6 +1912,7 @@ class _$OnAllergyClickedImpl implements OnAllergyClicked {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return onAllergyClicked?.call(this);
   }
@@ -1854,6 +1930,7 @@ class _$OnAllergyClickedImpl implements OnAllergyClicked {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onAllergyClicked != null) {
@@ -1949,6 +2026,7 @@ class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return onMinCaloriesChanged(min);
   }
@@ -1966,6 +2044,7 @@ class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return onMinCaloriesChanged?.call(min);
   }
@@ -1983,6 +2062,7 @@ class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onMinCaloriesChanged != null) {
@@ -2004,6 +2084,7 @@ class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return onMinCaloriesChanged(this);
   }
@@ -2021,6 +2102,7 @@ class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return onMinCaloriesChanged?.call(this);
   }
@@ -2038,6 +2120,7 @@ class _$OnMinCaloriesChangedImpl implements OnMinCaloriesChanged {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onMinCaloriesChanged != null) {
@@ -2133,6 +2216,7 @@ class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
     required TResult Function(AllergyType allergy) onAllergyClicked,
     required TResult Function(int? min) onMinCaloriesChanged,
     required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
   }) {
     return onMaxCaloriesChanged(max);
   }
@@ -2150,6 +2234,7 @@ class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
     TResult? Function(AllergyType allergy)? onAllergyClicked,
     TResult? Function(int? min)? onMinCaloriesChanged,
     TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
   }) {
     return onMaxCaloriesChanged?.call(max);
   }
@@ -2167,6 +2252,7 @@ class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
     TResult Function(AllergyType allergy)? onAllergyClicked,
     TResult Function(int? min)? onMinCaloriesChanged,
     TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onMaxCaloriesChanged != null) {
@@ -2188,6 +2274,7 @@ class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
     required TResult Function(OnAllergyClicked value) onAllergyClicked,
     required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
     required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
   }) {
     return onMaxCaloriesChanged(this);
   }
@@ -2205,6 +2292,7 @@ class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
     TResult? Function(OnAllergyClicked value)? onAllergyClicked,
     TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
   }) {
     return onMaxCaloriesChanged?.call(this);
   }
@@ -2222,6 +2310,7 @@ class _$OnMaxCaloriesChangedImpl implements OnMaxCaloriesChanged {
     TResult Function(OnAllergyClicked value)? onAllergyClicked,
     TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
     TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
     required TResult orElse(),
   }) {
     if (onMaxCaloriesChanged != null) {
@@ -2239,4 +2328,192 @@ abstract class OnMaxCaloriesChanged implements RegistrationEvent {
   @JsonKey(ignore: true)
   _$$OnMaxCaloriesChangedImplCopyWith<_$OnMaxCaloriesChangedImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnDaysChangedImplCopyWith<$Res> {
+  factory _$$OnDaysChangedImplCopyWith(
+          _$OnDaysChangedImpl value, $Res Function(_$OnDaysChangedImpl) then) =
+      __$$OnDaysChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int? countDays});
+}
+
+/// @nodoc
+class __$$OnDaysChangedImplCopyWithImpl<$Res>
+    extends _$RegistrationEventCopyWithImpl<$Res, _$OnDaysChangedImpl>
+    implements _$$OnDaysChangedImplCopyWith<$Res> {
+  __$$OnDaysChangedImplCopyWithImpl(
+      _$OnDaysChangedImpl _value, $Res Function(_$OnDaysChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? countDays = freezed,
+  }) {
+    return _then(_$OnDaysChangedImpl(
+      freezed == countDays
+          ? _value.countDays
+          : countDays // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnDaysChangedImpl implements OnDaysChanged {
+  const _$OnDaysChangedImpl(this.countDays);
+
+  @override
+  final int? countDays;
+
+  @override
+  String toString() {
+    return 'RegistrationEvent.onDaysChanged(countDays: $countDays)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnDaysChangedImpl &&
+            (identical(other.countDays, countDays) ||
+                other.countDays == countDays));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, countDays);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnDaysChangedImplCopyWith<_$OnDaysChangedImpl> get copyWith =>
+      __$$OnDaysChangedImplCopyWithImpl<_$OnDaysChangedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() onContinueClicked,
+    required TResult Function() backClicked,
+    required TResult Function(String email) emailChanged,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String password) passwordChanged,
+    required TResult Function(DietType diet) onDietClicked,
+    required TResult Function(AllergyType allergy) onAllergyClicked,
+    required TResult Function(int? min) onMinCaloriesChanged,
+    required TResult Function(int? max) onMaxCaloriesChanged,
+    required TResult Function(int? countDays) onDaysChanged,
+  }) {
+    return onDaysChanged(countDays);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? onContinueClicked,
+    TResult? Function()? backClicked,
+    TResult? Function(String email)? emailChanged,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String password)? passwordChanged,
+    TResult? Function(DietType diet)? onDietClicked,
+    TResult? Function(AllergyType allergy)? onAllergyClicked,
+    TResult? Function(int? min)? onMinCaloriesChanged,
+    TResult? Function(int? max)? onMaxCaloriesChanged,
+    TResult? Function(int? countDays)? onDaysChanged,
+  }) {
+    return onDaysChanged?.call(countDays);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? onContinueClicked,
+    TResult Function()? backClicked,
+    TResult Function(String email)? emailChanged,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String password)? passwordChanged,
+    TResult Function(DietType diet)? onDietClicked,
+    TResult Function(AllergyType allergy)? onAllergyClicked,
+    TResult Function(int? min)? onMinCaloriesChanged,
+    TResult Function(int? max)? onMaxCaloriesChanged,
+    TResult Function(int? countDays)? onDaysChanged,
+    required TResult orElse(),
+  }) {
+    if (onDaysChanged != null) {
+      return onDaysChanged(countDays);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(OnContinueClicked value) onContinueClicked,
+    required TResult Function(BackClicked value) backClicked,
+    required TResult Function(EmailChanged value) emailChanged,
+    required TResult Function(NameChanged value) nameChanged,
+    required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(OnDietClicked value) onDietClicked,
+    required TResult Function(OnAllergyClicked value) onAllergyClicked,
+    required TResult Function(OnMinCaloriesChanged value) onMinCaloriesChanged,
+    required TResult Function(OnMaxCaloriesChanged value) onMaxCaloriesChanged,
+    required TResult Function(OnDaysChanged value) onDaysChanged,
+  }) {
+    return onDaysChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(OnContinueClicked value)? onContinueClicked,
+    TResult? Function(BackClicked value)? backClicked,
+    TResult? Function(EmailChanged value)? emailChanged,
+    TResult? Function(NameChanged value)? nameChanged,
+    TResult? Function(PasswordChanged value)? passwordChanged,
+    TResult? Function(OnDietClicked value)? onDietClicked,
+    TResult? Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult? Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult? Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult? Function(OnDaysChanged value)? onDaysChanged,
+  }) {
+    return onDaysChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(OnContinueClicked value)? onContinueClicked,
+    TResult Function(BackClicked value)? backClicked,
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(NameChanged value)? nameChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(OnDietClicked value)? onDietClicked,
+    TResult Function(OnAllergyClicked value)? onAllergyClicked,
+    TResult Function(OnMinCaloriesChanged value)? onMinCaloriesChanged,
+    TResult Function(OnMaxCaloriesChanged value)? onMaxCaloriesChanged,
+    TResult Function(OnDaysChanged value)? onDaysChanged,
+    required TResult orElse(),
+  }) {
+    if (onDaysChanged != null) {
+      return onDaysChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnDaysChanged implements RegistrationEvent {
+  const factory OnDaysChanged(final int? countDays) = _$OnDaysChangedImpl;
+
+  int? get countDays;
+  @JsonKey(ignore: true)
+  _$$OnDaysChangedImplCopyWith<_$OnDaysChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

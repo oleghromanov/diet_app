@@ -14,6 +14,7 @@ class RegistrationState with _$RegistrationState {
     @Default(false) bool continueButtonEnabled,
     @Default([]) List<AllergyType> allergies,
     @Default([]) List<DietType> diets,
-    @Default(CaloriesRange(min: 1000, max: 2000)) CaloriesRange calories
+    @Default(7) int? countDays,
+    @Default(CaloriesRange(min: 1000, max: 2000)) CaloriesRange calories,
   }) = _RegistrationState;
 }

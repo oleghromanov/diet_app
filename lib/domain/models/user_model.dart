@@ -13,6 +13,7 @@ class UserModel {
     required this.mealPlan,
     required this.allergies,
     required this.diets,
+    required this.countDays,
   });
 
   final String name;
@@ -20,6 +21,7 @@ class UserModel {
   final List<DayPlanModel> mealPlan;
   final List<AllergyType> allergies;
   final List<DietType> diets;
+  final int countDays;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 

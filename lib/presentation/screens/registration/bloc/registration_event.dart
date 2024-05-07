@@ -12,4 +12,5 @@ class RegistrationEvent with _$RegistrationEvent {
   const factory RegistrationEvent.onAllergyClicked(AllergyType allergy) = OnAllergyClicked;
   const factory RegistrationEvent.onMinCaloriesChanged(int? min) = OnMinCaloriesChanged;
   const factory RegistrationEvent.onMaxCaloriesChanged(int? max) = OnMaxCaloriesChanged;
+  const factory RegistrationEvent.onDaysChanged(int? countDays) = OnDaysChanged;
 }
