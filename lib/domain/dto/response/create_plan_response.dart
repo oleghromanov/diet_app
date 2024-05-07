@@ -12,7 +12,7 @@ class CreatePlanResponse {
   factory CreatePlanResponse.fromJson(Map<String, dynamic> json) {
     return CreatePlanResponse(
       status: json['status'] as String,
-      selection: (json['selection'] as List<dynamic>).map((e) => DayPlan.fromJson(e)).toList(),
+      selection: (json['selection'] as List<dynamic>).map((e) => DayPlan.fromJson(e['sections'])).toList(),
     );
   }
 }

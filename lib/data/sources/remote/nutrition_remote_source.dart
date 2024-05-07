@@ -12,6 +12,7 @@ abstract class NutritionRemoteSource {
 
   @POST('/{app_id}/select')
   Future<CreatePlanResponse> createPlan({
+    @Header('Authorization') required String authorization,
     @Body() required CreatePlanBody body,
     @Path('app_id') required String appId,
   });

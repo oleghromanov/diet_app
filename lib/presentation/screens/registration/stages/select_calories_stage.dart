@@ -43,7 +43,7 @@ class _SelectCaloriesStageState extends State<SelectCaloriesStage> {
 
   Widget _buildHeader() => Text(
         LocaleKeys.calories.tr(),
-        style: AppTextStyles.header,
+        style: AppTextStyles.title,
       );
 
   Widget _buildCaloriesInputs() => Padding(

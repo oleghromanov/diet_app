@@ -15,8 +15,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_left.svg
   String get arrowLeft => 'assets/icons/arrow_left.svg';
 
+  /// File path: assets/icons/home.svg
+  String get home => 'assets/icons/home.svg';
+
+  /// File path: assets/icons/home_fill.svg
+  String get homeFill => 'assets/icons/home_fill.svg';
+
   /// List of all assets
-  List<String> get values => [arrowLeft];
+  List<String> get values => [arrowLeft, home, homeFill];
 }
 
 class $AssetsImagesGen {

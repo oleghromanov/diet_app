@@ -22,12 +22,14 @@ class _NutritionRemoteSource implements NutritionRemoteSource {
 
   @override
   Future<CreatePlanResponse> createPlan({
+    required String authorization,
     required CreatePlanBody body,
     required String appId,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio

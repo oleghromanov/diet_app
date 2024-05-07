@@ -9,3 +9,10 @@ class ShowSnackBar extends AppAction {
 
   String title;
 }
+
+class NavigationAction<T> extends AppAction {
+  NavigationAction({this.routeName, this.isPop = false, T? super.data});
+
+  final String? routeName;
+  final bool isPop;
+}

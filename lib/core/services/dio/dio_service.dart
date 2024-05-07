@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:diet_app/app/resources/app_constants.dart';
 import 'package:dio/dio.dart';
 
 class DioService {
@@ -11,8 +12,7 @@ class DioService {
         baseUrl: "",
         headers: {
           'Accept-Language': Platform.localeName.replaceAll(RegExp('_'), '-'),
-          'Edamam-Account-User': "Hostyy",
-          'Authorization': "Basic ZjRjNWJjYWU6ZjE4ZGJlNTc2ZDk2MjIyYzg1YTVmZWEyYjViYTNjMTA=",
+          'Edamam-Account-User': AppConstants.appUser,
         },
         sendTimeout: timeout,
         receiveTimeout: timeout,

@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:diet_app/app/navigation/app_router.gr.dart';
 import 'package:diet_app/app/resources/app_colors.dart';
 import 'package:diet_app/app/resources/app_text_styles.dart';
 import 'package:diet_app/core/models/app_action.dart';
 import 'package:diet_app/domain/enums/registration_stage.dart';
+import 'package:diet_app/domain/models/user_model.dart';
 import 'package:diet_app/gen/assets.gen.dart';
 import 'package:diet_app/gen/locale_keys.g.dart';
 import 'package:diet_app/presentation/screens/registration/bloc/registration_bloc.dart';
@@ -10,7 +12,6 @@ import 'package:diet_app/presentation/screens/registration/stages/select_calorie
 import 'package:diet_app/presentation/widgets/bars/progress_bar.dart';
 import 'package:diet_app/presentation/widgets/buttons/app_button.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,11 +21,13 @@ import 'stages/select_allergies_stage.dart';
 import 'stages/select_diet_stage.dart';
 
 class RegistrationScreen extends StatefulWidget implements AutoRouteWrapper {
-  const RegistrationScreen({super.key});
+  const RegistrationScreen({this.user, super.key});
+
+  final UserModel? user;
 
   @override
   Widget wrappedRoute(context) => BlocProvider(
-        create: (context) => RegistrationBloc(),
+        create: (context) => RegistrationBloc(user: user),
         child: this,
       );
 
@@ -41,6 +44,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           AppAction? action = state.action;
           if (action is ShowSnackBar) {
             _showSnackBar(context, action.title);
+          } else if (action is NavigationAction) {
+            if (action.routeName == NavigationRouter.name) {
+              context.router.pushAndPopUntil(const NavigationRouter(), predicate : (_) => false);
+            }
           }
         },
         builder: (context, state) {

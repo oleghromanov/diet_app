@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:diet_app/app/navigation/app_router.gr.dart';
 import 'package:diet_app/app/resources/app_colors.dart';
 import 'package:diet_app/app/resources/app_text_styles.dart';
 import 'package:diet_app/core/models/app_action.dart';
@@ -40,6 +41,10 @@ class _AuthScreenState extends State<AuthScreen> {
           AppAction? action = state.action;
           if (action is ShowSnackBar) {
             _showSnackBar(context, action.title);
+          } else if (action is NavigationAction) {
+            if (action.routeName == NavigationRouter.name) {
+              context.router.pushAndPopUntil(NavigationRouter(), predicate: (_) => false);
+            }
           }
         },
         builder: (context, state) => Container(
@@ -49,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildHeader(state.isSignIn? LocaleKeys.login.tr(): LocaleKeys.welcome.tr()),
+              _buildHeader(state.isSignIn ? LocaleKeys.login.tr() : LocaleKeys.welcome.tr()),
               state.isSignIn ? _buildInputs() : _buildImage(),
               if (!state.isSignIn) _buildDescription(),
               _buildButtons(state.isSignIn),
@@ -60,7 +65,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Widget _buildHeader(String text) => Text(
         text,
-        style: AppTextStyles.header,
+        style: AppTextStyles.title,
       );
 
   Widget _buildInputs() => SingleChildScrollView(
@@ -82,7 +87,6 @@ class _AuthScreenState extends State<AuthScreen> {
         text,
         style: AppTextStyles.description,
       );
-
 
   Widget _buildEmailInput() => AppInput(
         hintText: LocaleKeys.emailHint.tr(),
@@ -112,22 +116,23 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget _buildButtons(bool isSignIn) => Column(
         children: [
           _buildSignInButton(),
-         if (!isSignIn) const SizedBox(height: 32),
-         if (!isSignIn) _buildRegisterButton(),
+          if (!isSignIn) const SizedBox(height: 32),
+          if (!isSignIn) _buildRegisterButton(),
         ],
       );
 
-  Widget _buildSignInButton() =>BlocBuilder<AuthBloc, AuthState>(
-      buildWhen: (previous, current) =>
-      previous.buttonEnabled != current.buttonEnabled || previous.isLoading != current.isLoading,
-      builder: (context, state) => AppButton(
-        text: LocaleKeys.signIn.tr(),
-        isLoading: state.isLoading,
-        enabled: state.buttonEnabled,
-        onPressed: () {
-          context.read<AuthBloc>().add(const AuthEvent.signInClicked());
-        },
-      ),);
+  Widget _buildSignInButton() => BlocBuilder<AuthBloc, AuthState>(
+        buildWhen: (previous, current) =>
+            previous.buttonEnabled != current.buttonEnabled || previous.isLoading != current.isLoading,
+        builder: (context, state) => AppButton(
+          text: LocaleKeys.signIn.tr(),
+          isLoading: state.isLoading,
+          enabled: state.buttonEnabled,
+          onPressed: () {
+            context.read<AuthBloc>().add(const AuthEvent.signInClicked());
+          },
+        ),
+      );
 
   Widget _buildRegisterButton() => AppButton(
         text: LocaleKeys.registration.tr(),

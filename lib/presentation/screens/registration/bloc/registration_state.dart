@@ -9,6 +9,7 @@ class RegistrationState with _$RegistrationState {
     @Default("") String email,
     @Default("") String password,
     @Default("") String name,
+    @Default([]) List<DayPlanModel> mealPlan,
     @Default(false) bool emailValidationError,
     @Default(false) bool continueButtonEnabled,
     @Default([]) List<AllergyType> allergies,

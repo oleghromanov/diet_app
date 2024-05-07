@@ -1,17 +1,24 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:diet_app/app/navigation/app_router.gr.dart';
 import 'package:diet_app/core/errors/app_errors.dart';
 import 'package:diet_app/core/models/app_action.dart';
 import 'package:diet_app/data/repositories/auth_repository.dart';
 import 'package:diet_app/data/repositories/nutrition_repository.dart';
+import 'package:diet_app/data/repositories/recipes_repository.dart';
+import 'package:diet_app/data/sources/local/secure_local_storage.dart';
 import 'package:diet_app/di/injector.dart';
 import 'package:diet_app/domain/dto/calories_range.dart';
 import 'package:diet_app/domain/dto/day_plan.dart';
+import 'package:diet_app/domain/dto/recipe.dart';
 import 'package:diet_app/domain/enums/allergy_type.dart';
 import 'package:diet_app/domain/enums/diet_type.dart';
 import 'package:diet_app/domain/enums/registration_stage.dart';
+import 'package:diet_app/domain/models/day_plan_model.dart';
+import 'package:diet_app/domain/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:translator/translator.dart';
 
 part 'registration_state.dart';
 
@@ -20,7 +27,7 @@ part 'registration_event.dart';
 part 'registration_bloc.freezed.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  RegistrationBloc() : super(RegistrationState()) {
+  RegistrationBloc({this.user}) : super(RegistrationState()) {
     on<Init>(_init);
     on<OnContinueClicked>(_onContinueClicked);
     on<BackClicked>(_backClicked);
@@ -31,12 +38,19 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     on<OnAllergyClicked>(_onAllergyClicked);
     on<OnMaxCaloriesChanged>(_onMaxCaloriesChanged);
     on<OnMinCaloriesChanged>(_onMinCaloriesChanged);
+    add(const RegistrationEvent.init());
   }
 
-  AuthRepository authRepository = Injector.instance();
-  NutritionRepository nutritionRepository = Injector.instance();
+  final AuthRepository authRepository = Injector.instance();
+  final NutritionRepository nutritionRepository = Injector.instance();
+  final RecipesRepository recipesRepository = Injector.instance();
+  final SecureLocalStorage secureLocalStorage = Injector.instance();
 
-  bool get _continueButtonEnabled{
+  final translator = GoogleTranslator();
+
+  final UserModel? user;
+
+  bool get _continueButtonEnabled {
     switch (state.stage) {
       case RegistrationStage.enterMail:
         return state.password.isNotEmpty && state.name.isNotEmpty && state.email.isNotEmpty;
@@ -50,7 +64,17 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   }
 
   FutureOr<void> _init(Init event, Emitter<RegistrationState> emit) async {
-
+    if (user != null) {
+      emit(
+        state.copyWith(
+          stage: RegistrationStage.selectAllergies,
+          email: user!.email,
+          name: user!.name,
+          allergies: user!.allergies,
+          diets: user!.diets,
+        )
+      );
+    }
   }
 
   FutureOr<void> _onContinueClicked(OnContinueClicked event, Emitter<RegistrationState> emit) async {
@@ -102,25 +126,90 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       (e) => error = e,
     );
     if (plans != null) {
-      emit(state.copyWith(action: ShowSnackBar('Suc')));
+      await _fetchRecipes(plans!, emit);
     }
   }
 
-  FutureOr<void> _fetchRecipe(Emitter<RegistrationState> emit) async {
-    List<DayPlan>? plans;
+  FutureOr<void> _fetchRecipes(List<DayPlan> plans, Emitter<RegistrationState> emit) async {
+    List<String> uri = [];
+    List<Recipe> recipes = [];
+
+    for (DayPlan plan in plans) {
+      uri.addAll(plan.toList());
+    }
+
+    if (uri.length > 20) {
+      recipes.addAll(await _getRecipes(uri.sublist(0, 19)));
+      recipes.addAll(await _getRecipes(uri.sublist(19)));
+    } else {
+      recipes.addAll(await _getRecipes(uri));
+    }
+
+    if (recipes.isNotEmpty) {
+      for (int i = 0; i < recipes.length; i++) {
+        Recipe recipe = recipes[i];
+        recipes[i] = await _translateRecipe(recipe);
+      }
+
+      List<DayPlanModel> plans = [];
+      int countPlans = (recipes.length / 3).floor();
+      if (countPlans > 0) {
+        for (int i = 0; i < countPlans; i++) {
+          plans.add(DayPlanModel(
+            breakfast: recipes[i * 3],
+            lunch: recipes[i * 3 + 1],
+            dinner: recipes[i * 3 + 2],
+          ));
+        }
+        await _signUpUser(plans, emit);
+        emit(state.copyWith(mealPlan: plans));
+        emit(state.copyWith(action: NavigationAction(routeName: NavigationRouter.name, data: plans)));
+      }
+    }
+  }
+
+  Future<List<Recipe>> _getRecipes(List<String> uri) async {
+    List<Recipe> recipes = [];
     AppError? error;
-    final result = await nutritionRepository.createPlan(
-      allergies: state.allergies,
-      diets: state.diets,
-      calories: state.calories,
-    );
+    final result = await recipesRepository.getRecipesByUri(uri: uri);
     result.fold(
-      (data) => plans = data,
+      (data) => recipes = data,
       (e) => error = e,
     );
-    if (plans != null) {
+    return recipes;
+  }
 
+  Future<Recipe> _translateRecipe(Recipe recipe) async {
+    recipe.label = await _translateText(recipe.label);
+    recipe.ingredientLines = (await _translateText(recipe.ingredientLines.join('.;'))).split('.;');
+
+    return recipe;
+  }
+
+  Future<String> _translateText(String word) async {
+    try {
+      return (await translator.translate(word, from: "en", to: 'ru')).text;
+    } catch (e) {
+      return word;
     }
+  }
+
+  FutureOr<void> _signUpUser(List<DayPlanModel> plans, Emitter<RegistrationState> emit) async {
+    bool success = false;
+    AppError? error;
+    final result = await authRepository.signUp(
+      email: state.email,
+      name: state.name,
+      plan: plans,
+      allergies: state.allergies,
+      diets: state.diets,
+    );
+
+    result.fold(
+      (data) => success = data,
+      (e) => error = e,
+    );
+    if (success) await secureLocalStorage.setEmail(state.email);
   }
 
   FutureOr<void> _emailChanged(EmailChanged event, Emitter<RegistrationState> emit) {
@@ -166,16 +255,10 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   }
 
   FutureOr<void> _onMaxCaloriesChanged(OnMaxCaloriesChanged event, Emitter<RegistrationState> emit) {
-    emit(state.copyWith(
-      calories: CaloriesRange(min: state.calories.min, max: event.max),
-      continueButtonEnabled: true
-    ));
+    emit(state.copyWith(calories: CaloriesRange(min: state.calories.min, max: event.max), continueButtonEnabled: true));
   }
 
   FutureOr<void> _onMinCaloriesChanged(OnMinCaloriesChanged event, Emitter<RegistrationState> emit) {
-    emit(state.copyWith(
-      calories: CaloriesRange(min: event.min, max: state.calories.max),
-      continueButtonEnabled: true
-    ));
+    emit(state.copyWith(calories: CaloriesRange(min: event.min, max: state.calories.max), continueButtonEnabled: true));
   }
 }

@@ -30,7 +30,7 @@ class SelectAllergiesStage extends StatelessWidget {
 
   Widget _buildHeader() => Text(
         LocaleKeys.allergies.tr(),
-        style: AppTextStyles.header,
+        style: AppTextStyles.title,
       );
 
   Widget _buildAllergies() => Wrap(

@@ -31,7 +31,7 @@ class SelectDietStage extends StatelessWidget {
 
   Widget _buildHeader() => Text(
         LocaleKeys.diets.tr(),
-        style: AppTextStyles.header,
+        style: AppTextStyles.title,
       );
 
   Widget _buildDiets() => Wrap(

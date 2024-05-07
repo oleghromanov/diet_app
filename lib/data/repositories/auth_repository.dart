@@ -1,12 +1,20 @@
 import 'package:dartz/dartz.dart';
 import 'package:diet_app/core/errors/app_errors.dart';
 import 'package:diet_app/core/errors/error_handler.dart';
+import 'package:diet_app/domain/enums/allergy_type.dart';
+import 'package:diet_app/domain/enums/diet_type.dart';
+import 'package:diet_app/domain/models/day_plan_model.dart';
+import 'package:diet_app/domain/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthRepository {
   AuthRepository();
 
-  Future<Either<bool, AppError>> registerUser({required String email, required String password,}) async {
+  Future<Either<bool, AppError>> registerUser({
+    required String email,
+    required String password,
+  }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -17,16 +25,18 @@ class AuthRepository {
       if (error.code == 'weak-password') {
         return Right(AppError(errorMessage: 'The password provided is too weak.'));
       } else if (error.code == 'email-already-in-use') {
-        return Right(AppError(errorMessage:'The account already exists for that email.'));
+        return Right(AppError(errorMessage: 'The account already exists for that email.'));
       }
       return Right(ErrorHandler.handleError(error, stackTrace: stack));
-
     } catch (error, stack) {
       return Right(ErrorHandler.handleError(error, stackTrace: stack));
     }
   }
 
-  Future<Either<bool, AppError>> signIn({required String email, required String password,}) async {
+  Future<Either<bool, AppError>> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -40,7 +50,53 @@ class AuthRepository {
         return Right(AppError(errorMessage: 'Wrong password provided for that user.'));
       }
       return Right(ErrorHandler.handleError(error, stackTrace: stack));
+    } catch (error, stack) {
+      return Right(ErrorHandler.handleError(error, stackTrace: stack));
+    }
+  }
 
+  Future<Either<bool, AppError>> signUp({
+    required String name,
+    required String email,
+    required List<DayPlanModel> plan,
+    required List<AllergyType> allergies,
+    required List<DietType> diets,
+  }) async {
+    try {
+      UserModel user = UserModel(
+        name: name,
+        email: email,
+        mealPlan: plan,
+        allergies: allergies,
+        diets: diets,
+      );
+      final collection = FirebaseFirestore.instance.collection('users').withConverter<UserModel>(
+            fromFirestore: (snapshots, _) => UserModel.fromJson(snapshots.data()!),
+            toFirestore: (result, _) => result.toJson(),
+          );
+      final result = await collection.where('email', isEqualTo: email).get();
+
+      if (result.docs.isNotEmpty) {
+        collection.doc(result.docs.first.id).update(user.toJson());
+      } else {
+        collection.add(user);
+      }
+      return const Left(true);
+    } catch (error, stack) {
+      return Right(ErrorHandler.handleError(error, stackTrace: stack));
+    }
+  }
+
+  Future<Either<UserModel, AppError>> getUser({
+    required String email,
+  }) async {
+    try {
+      final collection = FirebaseFirestore.instance.collection('users').withConverter<UserModel>(
+            fromFirestore: (snapshots, _) => UserModel.fromJson(snapshots.data()!),
+            toFirestore: (result, _) => result.toJson(),
+          );
+      final result = await collection.where('email', isEqualTo: email).get();
+      return Left(result.docs.first.data());
     } catch (error, stack) {
       return Right(ErrorHandler.handleError(error, stackTrace: stack));
     }

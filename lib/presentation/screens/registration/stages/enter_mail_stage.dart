@@ -39,7 +39,7 @@ class _EnterMailStageState extends State<EnterMailStage> {
 
   Widget _buildHeader() => Text(
         LocaleKeys.registration.tr(),
-        style: AppTextStyles.header,
+        style: AppTextStyles.title,
       );
 
   Widget _buildInputs() => Padding(

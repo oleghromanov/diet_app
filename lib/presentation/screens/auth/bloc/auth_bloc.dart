@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:diet_app/app/navigation/app_router.gr.dart';
 import 'package:diet_app/core/errors/app_errors.dart';
 import 'package:diet_app/core/models/app_action.dart';
 import 'package:diet_app/data/repositories/auth_repository.dart';
+import 'package:diet_app/data/sources/local/secure_local_storage.dart';
 import 'package:diet_app/di/injector.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,12 +21,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInClicked>(_signInClicked);
     on<EmailChanged>(_emailChanged);
     on<PasswordChanged>(_passwordChanged);
+    add(const AuthEvent.init());
   }
 
-  AuthRepository authRepository = Injector.instance();
+  final AuthRepository authRepository = Injector.instance();
+  final SecureLocalStorage storage = Injector.instance();
 
-  FutureOr<void> _init(Init event, Emitter<AuthState> emit) {
-    // emit(state.copyWith());
+  FutureOr<void> _init(Init event, Emitter<AuthState> emit) async {
+   // await storage.setEmail(null);
+    String? email = await storage.getEmail();
+    if (email != null) emit(state.copyWith(action: NavigationAction(routeName: NavigationRouter.name)));
   }
 
   Future<FutureOr<void>> _signInClicked(SignInClicked event, Emitter<AuthState> emit) async {
@@ -36,12 +42,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppError? error;
       final result = await authRepository.signIn(email: state.email, password: state.password);
       result.fold(
-            (data) => success = data,
-            (e) => error = e,
+        (data) => success = data,
+        (e) => error = e,
       );
       emit(state.copyWith(isLoading: false));
       if (success) {
-        emit(state.copyWith(action: ShowSnackBar('Success')));
+        emit(state.copyWith(action: NavigationAction(routeName: NavigationRouter.name)));
       } else {
         emit(state.copyWith(action: ShowSnackBar(error!.errorMessage ?? 'Error')));
       }

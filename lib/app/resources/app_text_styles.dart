@@ -8,9 +8,15 @@ class AppTextStyles {
     color: AppColors.onAccent,
   );
 
-  static const TextStyle header = TextStyle(
+  static const TextStyle title = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.w600,
+    color: AppColors.onBackground,
+  );
+
+  static const TextStyle subTitle = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.w500,
     color: AppColors.onBackground,
   );
 
@@ -29,6 +35,12 @@ class AppTextStyles {
   static const TextStyle text = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w300,
+    color: AppColors.onBackground,
+  );
+
+  static const TextStyle boldText = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
     color: AppColors.onBackground,
   );
 

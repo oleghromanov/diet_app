@@ -61,5 +61,22 @@ abstract class  LocaleKeys {
   static const caloriesDescription = 'caloriesDescription';
   static const min = 'min';
   static const max = 'max';
+  static const mealPlan = 'mealPlan';
+  static const breakfast = 'breakfast';
+  static const launch = 'launch';
+  static const dinner = 'dinner';
+  static const kcal = 'kcal';
+  static const g = 'g';
+  static const protein = 'protein';
+  static const fat = 'fat';
+  static const carbs = 'carbs';
+  static const day = 'day';
+  static const ingredients = 'ingredients';
+  static const yield = 'yield';
+  static const linkRecipeDescription = 'linkRecipeDescription';
+  static const goToWebsite = 'goToWebsite';
+  static const changePlan = 'changePlan';
+  static const logout = 'logout';
+  static const instruction = 'instruction';
 
 }

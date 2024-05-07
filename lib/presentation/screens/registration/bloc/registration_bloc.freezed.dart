@@ -22,6 +22,7 @@ mixin _$RegistrationState {
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  List<DayPlanModel> get mealPlan => throw _privateConstructorUsedError;
   bool get emailValidationError => throw _privateConstructorUsedError;
   bool get continueButtonEnabled => throw _privateConstructorUsedError;
   List<AllergyType> get allergies => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $RegistrationStateCopyWith<$Res> {
       String email,
       String password,
       String name,
+      List<DayPlanModel> mealPlan,
       bool emailValidationError,
       bool continueButtonEnabled,
       List<AllergyType> allergies,
@@ -72,6 +74,7 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
     Object? email = null,
     Object? password = null,
     Object? name = null,
+    Object? mealPlan = null,
     Object? emailValidationError = null,
     Object? continueButtonEnabled = null,
     Object? allergies = null,
@@ -103,6 +106,10 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      mealPlan: null == mealPlan
+          ? _value.mealPlan
+          : mealPlan // ignore: cast_nullable_to_non_nullable
+              as List<DayPlanModel>,
       emailValidationError: null == emailValidationError
           ? _value.emailValidationError
           : emailValidationError // ignore: cast_nullable_to_non_nullable
@@ -142,6 +149,7 @@ abstract class _$$RegistrationStateImplCopyWith<$Res>
       String email,
       String password,
       String name,
+      List<DayPlanModel> mealPlan,
       bool emailValidationError,
       bool continueButtonEnabled,
       List<AllergyType> allergies,
@@ -166,6 +174,7 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
     Object? email = null,
     Object? password = null,
     Object? name = null,
+    Object? mealPlan = null,
     Object? emailValidationError = null,
     Object? continueButtonEnabled = null,
     Object? allergies = null,
@@ -197,6 +206,10 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      mealPlan: null == mealPlan
+          ? _value._mealPlan
+          : mealPlan // ignore: cast_nullable_to_non_nullable
+              as List<DayPlanModel>,
       emailValidationError: null == emailValidationError
           ? _value.emailValidationError
           : emailValidationError // ignore: cast_nullable_to_non_nullable
@@ -231,12 +244,14 @@ class _$RegistrationStateImpl implements _RegistrationState {
       this.email = "",
       this.password = "",
       this.name = "",
+      final List<DayPlanModel> mealPlan = const [],
       this.emailValidationError = false,
       this.continueButtonEnabled = false,
       final List<AllergyType> allergies = const [],
       final List<DietType> diets = const [],
       this.calories = const CaloriesRange(min: 1000, max: 2000)})
-      : _allergies = allergies,
+      : _mealPlan = mealPlan,
+        _allergies = allergies,
         _diets = diets;
 
   @override
@@ -256,6 +271,15 @@ class _$RegistrationStateImpl implements _RegistrationState {
   @override
   @JsonKey()
   final String name;
+  final List<DayPlanModel> _mealPlan;
+  @override
+  @JsonKey()
+  List<DayPlanModel> get mealPlan {
+    if (_mealPlan is EqualUnmodifiableListView) return _mealPlan;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_mealPlan);
+  }
+
   @override
   @JsonKey()
   final bool emailValidationError;
@@ -286,7 +310,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
 
   @override
   String toString() {
-    return 'RegistrationState(isLoading: $isLoading, action: $action, stage: $stage, email: $email, password: $password, name: $name, emailValidationError: $emailValidationError, continueButtonEnabled: $continueButtonEnabled, allergies: $allergies, diets: $diets, calories: $calories)';
+    return 'RegistrationState(isLoading: $isLoading, action: $action, stage: $stage, email: $email, password: $password, name: $name, mealPlan: $mealPlan, emailValidationError: $emailValidationError, continueButtonEnabled: $continueButtonEnabled, allergies: $allergies, diets: $diets, calories: $calories)';
   }
 
   @override
@@ -302,6 +326,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._mealPlan, _mealPlan) &&
             (identical(other.emailValidationError, emailValidationError) ||
                 other.emailValidationError == emailValidationError) &&
             (identical(other.continueButtonEnabled, continueButtonEnabled) ||
@@ -322,6 +347,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
       email,
       password,
       name,
+      const DeepCollectionEquality().hash(_mealPlan),
       emailValidationError,
       continueButtonEnabled,
       const DeepCollectionEquality().hash(_allergies),
@@ -344,6 +370,7 @@ abstract class _RegistrationState implements RegistrationState {
       final String email,
       final String password,
       final String name,
+      final List<DayPlanModel> mealPlan,
       final bool emailValidationError,
       final bool continueButtonEnabled,
       final List<AllergyType> allergies,
@@ -362,6 +389,8 @@ abstract class _RegistrationState implements RegistrationState {
   String get password;
   @override
   String get name;
+  @override
+  List<DayPlanModel> get mealPlan;
   @override
   bool get emailValidationError;
   @override
