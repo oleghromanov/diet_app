@@ -4,6 +4,7 @@ import 'package:diet_app/presentation/screens/home/home_screen.dart';
 import 'package:diet_app/presentation/screens/navigation/navigation_screen.dart';
 import 'package:diet_app/presentation/screens/recipe/recipe_screen.dart';
 import 'package:diet_app/presentation/screens/registration/registration_screen.dart';
+import 'package:diet_app/presentation/screens/search/search_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -31,6 +32,11 @@ import 'package:diet_app/presentation/screens/registration/registration_screen.d
           path: 'home',
           name: 'HomeRouter',
           page: HomeScreen,
+        ),
+        AutoRoute(
+          path: 'search',
+          name: 'SearchRouter',
+          page: SearchScreen,
         ),
       ],
     ),

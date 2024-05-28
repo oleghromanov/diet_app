@@ -21,6 +21,50 @@ class _RecipesRemoteSource implements RecipesRemoteSource {
   String? baseUrl;
 
   @override
+  Future<RecipeUriResponse> searchRecipes({
+    String type = 'public',
+    String? calories,
+    List<String>? diet,
+    List<String>? health,
+    required String searchText,
+    required String appId,
+    required String appKey,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'type': type,
+      r'calories': calories,
+      r'diet': diet,
+      r'health': health,
+      r'q': searchText,
+      r'app_id': appId,
+      r'app_key': appKey,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<RecipeUriResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RecipeUriResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<RecipeUriResponse> getRecipesByUri({
     String type = 'public',
     required List<String> uri,

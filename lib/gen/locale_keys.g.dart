@@ -63,7 +63,7 @@ abstract class  LocaleKeys {
   static const max = 'max';
   static const mealPlan = 'mealPlan';
   static const breakfast = 'breakfast';
-  static const launch = 'launch';
+  static const lunch = 'lunch';
   static const dinner = 'dinner';
   static const kcal = 'kcal';
   static const g = 'g';
@@ -80,5 +80,9 @@ abstract class  LocaleKeys {
   static const instruction = 'instruction';
   static const countDays = 'countDays';
   static const countDaysDescription = 'countDaysDescription';
+  static const addToPlan = 'addToPlan';
+  static const addRecipe = 'addRecipe';
+  static const changePosition = 'changePosition';
+  static const save = 'save';
 
 }

@@ -2,9 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diet_app/app/resources/app_colors.dart';
 import 'package:diet_app/app/resources/app_text_styles.dart';
+import 'package:diet_app/di/injector.dart';
 import 'package:diet_app/domain/dto/recipe.dart';
+import 'package:diet_app/domain/models/position_model.dart';
+import 'package:diet_app/domain/models/user_model.dart';
 import 'package:diet_app/gen/assets.gen.dart';
 import 'package:diet_app/gen/locale_keys.g.dart';
+import 'package:diet_app/presentation/modals/add_recipe_modal.dart';
+import 'package:diet_app/presentation/screens/navigation/bloc/navigation_bloc.dart';
 import 'package:diet_app/presentation/widgets/buttons/app_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +20,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'bloc/recipe_bloc.dart';
 
 class RecipeScreen extends StatefulWidget implements AutoRouteWrapper {
-  const RecipeScreen({required this.recipe, super.key});
+  const RecipeScreen({
+    required this.recipe,
+    this.isMyRecipe = true,
+    super.key,
+  });
 
   final Recipe recipe;
+  final bool isMyRecipe;
 
   @override
   Widget wrappedRoute(context) => BlocProvider(
@@ -51,6 +61,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
               leadingWidth: 64,
               stretch: true,
               pinned: true,
+              actions: [
+                _buildActions(state.recipe),
+              ],
               leading: _buildBackButton(),
               backgroundColor: AppColors.background,
               flexibleSpace: FlexibleSpaceBar(
@@ -82,6 +95,56 @@ class _RecipeScreenState extends State<RecipeScreen> {
               state.recipe.instructions != null
                   ? _buildInstructions(state.recipe.instructions!)
                   : _buildLink(state.recipe.url),
+            ],
+          ),
+        ),
+      );
+
+  Widget _buildActions(Recipe recipe) {
+    NavigationBloc navigationBloc = Injector.instance();
+    UserModel user = navigationBloc.state.user!;
+    PositionModel? position = user.getRecipePosition(recipe);
+    return PopupMenuButton<String>(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      elevation: 0,
+      padding: const EdgeInsets.only(left: 24, right: 24, top: 14, bottom: 14),
+      onSelected: (action) {
+        _showAddRecipeModal(
+          countDays: 7,
+          position: position,
+          onSavePressed: (newPosition) {
+            context.router.pop();
+            if (position == newPosition) return;
+            user = user.copyWith(mealPlan:user.changePositions(recipe: recipe, newPosition: newPosition, position: position));
+            navigationBloc.add(NavigationEvent.userChanged(user));
+          },
+        );
+      },
+      itemBuilder: (BuildContext context) => [
+        widget.isMyRecipe ? LocaleKeys.changePosition.tr() : LocaleKeys.addToPlan.tr()
+      ].map((e) => _buildActionButton(e)).toList(),
+      child: const Icon(
+        Icons.more_vert_outlined,
+        color: AppColors.onPrimary,
+        opticalSize: 24,
+      ),
+    );
+  }
+
+  PopupMenuItem<String> _buildActionButton(String action) => PopupMenuItem<String>(
+        value: action,
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 10, top: 10),
+          child: Row(
+            children: [
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  action,
+                  style: AppTextStyles.boldText,
+                  textAlign: TextAlign.start,
+                ),
+              ),
             ],
           ),
         ),
@@ -212,4 +275,22 @@ class _RecipeScreenState extends State<RecipeScreen> {
           ),
         ],
       );
+
+  void _showAddRecipeModal({
+    required int countDays,
+    PositionModel? position,
+    Function(PositionModel)? onSavePressed,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: AddRecipeModal(
+          countDays: countDays,
+          position: position,
+          onSavePressed: onSavePressed,
+        ),
+      ),
+    );
+  }
 }

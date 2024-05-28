@@ -23,43 +23,37 @@ part 'home_bloc.freezed.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeState()) {
     on<Init>(_init);
+    on<InitUser>(_initUser);
     on<OnActionPressed>(_onActionPressed);
-    add(const HomeEvent.init());
   }
 
-  final AuthRepository authRepository = Injector.instance();
   final SecureLocalStorage secureLocalStorage = Injector.instance();
 
-  FutureOr<void> _init(Init event, Emitter<HomeState> emit) async {
-     await _getUser(emit);
+  FutureOr<void> _init(Init event, Emitter<HomeState> emit) async {}
+
+  FutureOr<void> _initUser(InitUser event, Emitter<HomeState> emit) async {
+    final user = event.user;
+    emit(state.copyWith(user: null));
+    emit(state.copyWith(user: user));
   }
 
   FutureOr<void> _onActionPressed(OnActionPressed event, Emitter<HomeState> emit) async {
     switch (event.action) {
       case HomeAction.changePlan:
-        if (state.user != null) emit(state.copyWith(action: NavigationAction(routeName: RegistrationRouter.name, data: state.user)));
+        if (state.user != null) {
+          emit(state.copyWith(
+              action: NavigationAction(
+            routeName: RegistrationRouter.name,
+            data: state.user,
+          )));
+        }
         break;
       case HomeAction.logout:
         secureLocalStorage.setEmail(null);
-        emit(state.copyWith(action: NavigationAction(routeName: AuthRouter.name, )));
+        emit(state.copyWith(action: NavigationAction(routeName: AuthRouter.name)));
         break;
     }
   }
 
-  FutureOr<void> _getUser(Emitter<HomeState> emit) async {
-    UserModel? user;
-    AppError? error;
-    final email = await secureLocalStorage.getEmail();
-    if (email != null && email.isNotEmpty) {
-      final result = await authRepository.getUser(email: email);
-      result.fold(
-        (data) => user = data,
-        (e) => error = e,
-      );
 
-    if (user != null) {
-      emit(state.copyWith(user: user));
-    }
-  }
-  }
 }

@@ -16,7 +16,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(AppStyles.darkStyle);
 
-  await Injector.init();
+  Injector.init();
   runApp(EasyLocalization(
     supportedLocales: const [Locale('ru')],
     path: 'assets/l10n',

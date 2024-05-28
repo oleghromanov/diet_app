@@ -13,14 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/home_bloc.dart';
 
-class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
-  @override
-  Widget wrappedRoute(context) => BlocProvider(
-        create: (context) => HomeBloc(),
-        child: this,
-      );
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -131,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 24),
             _buildSubTitle(
-              LocaleKeys.launch.tr(),
+              LocaleKeys.lunch.tr(),
             ),
             const SizedBox(height: 12),
             RecipeItem(

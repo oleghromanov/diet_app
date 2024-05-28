@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:diet_app/domain/dto/recipe.dart';
+import 'package:diet_app/domain/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe_state.dart';

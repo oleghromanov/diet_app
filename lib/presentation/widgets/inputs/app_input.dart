@@ -19,6 +19,7 @@ class AppInput extends StatelessWidget {
     this.backgroundColor,
     this.suffixIcon,
     this.onChanged,
+    this.onSubmitted,
     this.maskFormatter,
     this.contentPadding,
     this.suffixIconConstraints,
@@ -35,6 +36,7 @@ class AppInput extends StatelessWidget {
   final int? maxLength;
   final TextInputType keyboardType;
   final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
   final TextAlign textAlign;
   final Color? backgroundColor;
   final Widget? suffixIcon;
@@ -65,6 +67,9 @@ class AppInput extends StatelessWidget {
       keyboardType: keyboardType,
       onChanged: (text) {
         onChanged?.call(text);
+      },
+      onSubmitted: (text) {
+        onSubmitted?.call(text);
       },
       decoration:decoration ?? InputDecoration(
         counter: const SizedBox(),

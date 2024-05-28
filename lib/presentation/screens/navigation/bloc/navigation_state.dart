@@ -4,5 +4,7 @@ part of 'navigation_bloc.dart';
 class NavigationState with _$NavigationState {
   factory NavigationState({
     @Default(false) bool isLoading,
+    UserModel? user,
+    AppAction? action,
   }) = _NavigationState;
 }

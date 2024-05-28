@@ -172,18 +172,21 @@ mixin _$HomeEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(UserModel user) initUser,
     required TResult Function(HomeAction action) onActionPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(UserModel user)? initUser,
     TResult? Function(HomeAction action)? onActionPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(UserModel user)? initUser,
     TResult Function(HomeAction action)? onActionPressed,
     required TResult orElse(),
   }) =>
@@ -191,18 +194,21 @@ mixin _$HomeEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InitUser value) initUser,
     required TResult Function(OnActionPressed value) onActionPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(InitUser value)? initUser,
     TResult? Function(OnActionPressed value)? onActionPressed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InitUser value)? initUser,
     TResult Function(OnActionPressed value)? onActionPressed,
     required TResult orElse(),
   }) =>
@@ -264,6 +270,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(UserModel user) initUser,
     required TResult Function(HomeAction action) onActionPressed,
   }) {
     return init();
@@ -273,6 +280,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(UserModel user)? initUser,
     TResult? Function(HomeAction action)? onActionPressed,
   }) {
     return init?.call();
@@ -282,6 +290,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(UserModel user)? initUser,
     TResult Function(HomeAction action)? onActionPressed,
     required TResult orElse(),
   }) {
@@ -295,6 +304,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InitUser value) initUser,
     required TResult Function(OnActionPressed value) onActionPressed,
   }) {
     return init(this);
@@ -304,6 +314,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(InitUser value)? initUser,
     TResult? Function(OnActionPressed value)? onActionPressed,
   }) {
     return init?.call(this);
@@ -313,6 +324,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InitUser value)? initUser,
     TResult Function(OnActionPressed value)? onActionPressed,
     required TResult orElse(),
   }) {
@@ -325,6 +337,145 @@ class _$InitImpl implements Init {
 
 abstract class Init implements HomeEvent {
   const factory Init() = _$InitImpl;
+}
+
+/// @nodoc
+abstract class _$$InitUserImplCopyWith<$Res> {
+  factory _$$InitUserImplCopyWith(
+          _$InitUserImpl value, $Res Function(_$InitUserImpl) then) =
+      __$$InitUserImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UserModel user});
+}
+
+/// @nodoc
+class __$$InitUserImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$InitUserImpl>
+    implements _$$InitUserImplCopyWith<$Res> {
+  __$$InitUserImplCopyWithImpl(
+      _$InitUserImpl _value, $Res Function(_$InitUserImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$InitUserImpl(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$InitUserImpl implements InitUser {
+  const _$InitUserImpl(this.user);
+
+  @override
+  final UserModel user;
+
+  @override
+  String toString() {
+    return 'HomeEvent.initUser(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InitUserImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InitUserImplCopyWith<_$InitUserImpl> get copyWith =>
+      __$$InitUserImplCopyWithImpl<_$InitUserImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(UserModel user) initUser,
+    required TResult Function(HomeAction action) onActionPressed,
+  }) {
+    return initUser(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(UserModel user)? initUser,
+    TResult? Function(HomeAction action)? onActionPressed,
+  }) {
+    return initUser?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(UserModel user)? initUser,
+    TResult Function(HomeAction action)? onActionPressed,
+    required TResult orElse(),
+  }) {
+    if (initUser != null) {
+      return initUser(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InitUser value) initUser,
+    required TResult Function(OnActionPressed value) onActionPressed,
+  }) {
+    return initUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(InitUser value)? initUser,
+    TResult? Function(OnActionPressed value)? onActionPressed,
+  }) {
+    return initUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InitUser value)? initUser,
+    TResult Function(OnActionPressed value)? onActionPressed,
+    required TResult orElse(),
+  }) {
+    if (initUser != null) {
+      return initUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InitUser implements HomeEvent {
+  const factory InitUser(final UserModel user) = _$InitUserImpl;
+
+  UserModel get user;
+  @JsonKey(ignore: true)
+  _$$InitUserImplCopyWith<_$InitUserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -393,6 +544,7 @@ class _$OnActionPressedImpl implements OnActionPressed {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(UserModel user) initUser,
     required TResult Function(HomeAction action) onActionPressed,
   }) {
     return onActionPressed(action);
@@ -402,6 +554,7 @@ class _$OnActionPressedImpl implements OnActionPressed {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(UserModel user)? initUser,
     TResult? Function(HomeAction action)? onActionPressed,
   }) {
     return onActionPressed?.call(action);
@@ -411,6 +564,7 @@ class _$OnActionPressedImpl implements OnActionPressed {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(UserModel user)? initUser,
     TResult Function(HomeAction action)? onActionPressed,
     required TResult orElse(),
   }) {
@@ -424,6 +578,7 @@ class _$OnActionPressedImpl implements OnActionPressed {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InitUser value) initUser,
     required TResult Function(OnActionPressed value) onActionPressed,
   }) {
     return onActionPressed(this);
@@ -433,6 +588,7 @@ class _$OnActionPressedImpl implements OnActionPressed {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(InitUser value)? initUser,
     TResult? Function(OnActionPressed value)? onActionPressed,
   }) {
     return onActionPressed?.call(this);
@@ -442,6 +598,7 @@ class _$OnActionPressedImpl implements OnActionPressed {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InitUser value)? initUser,
     TResult Function(OnActionPressed value)? onActionPressed,
     required TResult orElse(),
   }) {

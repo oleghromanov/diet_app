@@ -24,4 +24,19 @@ class RecipesRepository {
       return Right(ErrorHandler.handleError(error, stackTrace: stack));
     }
   }
+
+  Future<Either<List<Recipe>, AppError>> searchRecipes({
+    required String searchText,
+  }) async {
+    try {
+      final response = await recipesRemoteSource.searchRecipes(
+        searchText: searchText,
+        appId: AppConstants.appId,
+        appKey: AppConstants.appKey,
+      );
+      return Left(response.hits);
+    } catch (error, stack) {
+      return Right(ErrorHandler.handleError(error, stackTrace: stack));
+    }
+  }
 }

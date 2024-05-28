@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$NavigationState {
   bool get isLoading => throw _privateConstructorUsedError;
+  UserModel? get user => throw _privateConstructorUsedError;
+  AppAction? get action => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $NavigationStateCopyWith<NavigationState> get copyWith =>
@@ -29,7 +31,7 @@ abstract class $NavigationStateCopyWith<$Res> {
           NavigationState value, $Res Function(NavigationState) then) =
       _$NavigationStateCopyWithImpl<$Res, NavigationState>;
   @useResult
-  $Res call({bool isLoading});
+  $Res call({bool isLoading, UserModel? user, AppAction? action});
 }
 
 /// @nodoc
@@ -46,12 +48,22 @@ class _$NavigationStateCopyWithImpl<$Res, $Val extends NavigationState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? user = freezed,
+    Object? action = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
+      action: freezed == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as AppAction?,
     ) as $Val);
   }
 }
@@ -64,7 +76,7 @@ abstract class _$$NavigationStateImplCopyWith<$Res>
       __$$NavigationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading});
+  $Res call({bool isLoading, UserModel? user, AppAction? action});
 }
 
 /// @nodoc
@@ -79,12 +91,22 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? user = freezed,
+    Object? action = freezed,
   }) {
     return _then(_$NavigationStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel?,
+      action: freezed == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as AppAction?,
     ));
   }
 }
@@ -92,15 +114,19 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$NavigationStateImpl implements _NavigationState {
-  _$NavigationStateImpl({this.isLoading = false});
+  _$NavigationStateImpl({this.isLoading = false, this.user, this.action});
 
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  final UserModel? user;
+  @override
+  final AppAction? action;
 
   @override
   String toString() {
-    return 'NavigationState(isLoading: $isLoading)';
+    return 'NavigationState(isLoading: $isLoading, user: $user, action: $action)';
   }
 
   @override
@@ -109,11 +135,13 @@ class _$NavigationStateImpl implements _NavigationState {
         (other.runtimeType == runtimeType &&
             other is _$NavigationStateImpl &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading);
+  int get hashCode => Object.hash(runtimeType, isLoading, user, action);
 
   @JsonKey(ignore: true)
   @override
@@ -124,10 +152,17 @@ class _$NavigationStateImpl implements _NavigationState {
 }
 
 abstract class _NavigationState implements NavigationState {
-  factory _NavigationState({final bool isLoading}) = _$NavigationStateImpl;
+  factory _NavigationState(
+      {final bool isLoading,
+      final UserModel? user,
+      final AppAction? action}) = _$NavigationStateImpl;
 
   @override
   bool get isLoading;
+  @override
+  UserModel? get user;
+  @override
+  AppAction? get action;
   @override
   @JsonKey(ignore: true)
   _$$NavigationStateImplCopyWith<_$NavigationStateImpl> get copyWith =>
@@ -139,32 +174,38 @@ mixin _$NavigationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(UserModel user) userChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(UserModel user)? userChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(UserModel user)? userChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(UserChanged value) userChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(UserChanged value)? userChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(UserChanged value)? userChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -226,6 +267,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(UserModel user) userChanged,
   }) {
     return init();
   }
@@ -234,6 +276,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(UserModel user)? userChanged,
   }) {
     return init?.call();
   }
@@ -242,6 +285,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(UserModel user)? userChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -254,6 +298,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(UserChanged value) userChanged,
   }) {
     return init(this);
   }
@@ -262,6 +307,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(UserChanged value)? userChanged,
   }) {
     return init?.call(this);
   }
@@ -270,6 +316,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(UserChanged value)? userChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -281,4 +328,137 @@ class _$InitImpl implements Init {
 
 abstract class Init implements NavigationEvent {
   const factory Init() = _$InitImpl;
+}
+
+/// @nodoc
+abstract class _$$UserChangedImplCopyWith<$Res> {
+  factory _$$UserChangedImplCopyWith(
+          _$UserChangedImpl value, $Res Function(_$UserChangedImpl) then) =
+      __$$UserChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UserModel user});
+}
+
+/// @nodoc
+class __$$UserChangedImplCopyWithImpl<$Res>
+    extends _$NavigationEventCopyWithImpl<$Res, _$UserChangedImpl>
+    implements _$$UserChangedImplCopyWith<$Res> {
+  __$$UserChangedImplCopyWithImpl(
+      _$UserChangedImpl _value, $Res Function(_$UserChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$UserChangedImpl(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserModel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UserChangedImpl implements UserChanged {
+  const _$UserChangedImpl(this.user);
+
+  @override
+  final UserModel user;
+
+  @override
+  String toString() {
+    return 'NavigationEvent.userChanged(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserChangedImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserChangedImplCopyWith<_$UserChangedImpl> get copyWith =>
+      __$$UserChangedImplCopyWithImpl<_$UserChangedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(UserModel user) userChanged,
+  }) {
+    return userChanged(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(UserModel user)? userChanged,
+  }) {
+    return userChanged?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(UserModel user)? userChanged,
+    required TResult orElse(),
+  }) {
+    if (userChanged != null) {
+      return userChanged(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(UserChanged value) userChanged,
+  }) {
+    return userChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(UserChanged value)? userChanged,
+  }) {
+    return userChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(UserChanged value)? userChanged,
+    required TResult orElse(),
+  }) {
+    if (userChanged != null) {
+      return userChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UserChanged implements NavigationEvent {
+  const factory UserChanged(final UserModel user) = _$UserChangedImpl;
+
+  UserModel get user;
+  @JsonKey(ignore: true)
+  _$$UserChangedImplCopyWith<_$UserChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -16,7 +16,7 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> ru = {
   "welcome": "Добро пожаловать!",
-  "authDescription": "Мы подберем диету\nспециально для тебя",
+  "authDescription": "Мы подберем план питания\nспециально для тебя",
   "signIn": "Войти",
   "registration": "Регистрация",
   "email": "Почта",
@@ -77,7 +77,7 @@ class CodegenLoader extends AssetLoader{
   "max": "макс",
   "mealPlan": "План питания",
   "breakfast": "Завтрак",
-  "launch": "Обед",
+  "lunch": "Обед",
   "dinner": "Ужин",
   "kcal": "ккал",
   "g": "г",
@@ -98,7 +98,11 @@ class CodegenLoader extends AssetLoader{
   "logout": "Выйти",
   "instruction": "Инструкция",
   "countDays": "Количество дней",
-  "countDaysDescription": "Выберите количество дней (до 10)"
+  "countDaysDescription": "Выберите количество дней (до 10)",
+  "addToPlan": "Добавить в план",
+  "addRecipe": "Добавить рецепт",
+  "changePosition": "Изменить позицию",
+  "save": "Сохранить"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru};
 }

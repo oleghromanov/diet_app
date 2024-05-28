@@ -47,6 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(state.copyWith(isLoading: false));
       if (success) {
+        storage.setEmail(state.email);
         emit(state.copyWith(action: NavigationAction(routeName: NavigationRouter.name)));
       } else {
         emit(state.copyWith(action: ShowSnackBar(error!.errorMessage ?? 'Error')));

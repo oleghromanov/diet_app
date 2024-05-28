@@ -21,8 +21,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home_fill.svg
   String get homeFill => 'assets/icons/home_fill.svg';
 
+  /// File path: assets/icons/receipt_search.svg
+  String get receiptSearch => 'assets/icons/receipt_search.svg';
+
+  /// File path: assets/icons/receipt_search_fill.svg
+  String get receiptSearchFill => 'assets/icons/receipt_search_fill.svg';
+
+  /// File path: assets/icons/search.svg
+  String get search => 'assets/icons/search.svg';
+
   /// List of all assets
-  List<String> get values => [arrowLeft, home, homeFill];
+  List<String> get values =>
+      [arrowLeft, home, homeFill, receiptSearch, receiptSearchFill, search];
 }
 
 class $AssetsImagesGen {

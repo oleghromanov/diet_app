@@ -111,6 +111,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget _buildDescription() => const Text(
         LocaleKeys.authDescription,
         style: AppTextStyles.description,
+        textAlign: TextAlign.center,
       ).tr();
 
   Widget _buildButtons(bool isSignIn) => Column(
