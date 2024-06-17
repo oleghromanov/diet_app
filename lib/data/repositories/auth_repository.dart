@@ -1,9 +1,8 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:diet_app/core/errors/app_errors.dart';
 import 'package:diet_app/core/errors/error_handler.dart';
-import 'package:diet_app/domain/enums/allergy_type.dart';
-import 'package:diet_app/domain/enums/diet_type.dart';
-import 'package:diet_app/domain/models/day_plan_model.dart';
 import 'package:diet_app/domain/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,21 +54,11 @@ class AuthRepository {
     }
   }
 
-  Future<Either<bool, AppError>> signUp({
-    required UserModel user,
-  }) async {
+  Future<Either<bool, AppError>> setUser({required UserModel user}) async {
     try {
-      final collection = FirebaseFirestore.instance.collection('users').withConverter<UserModel>(
-            fromFirestore: (snapshots, _) => UserModel.fromJson(snapshots.data()!),
-            toFirestore: (result, _) => result.toJson(),
-          );
-      final result = await collection.where('email', isEqualTo: user.email).get();
-
-      if (result.docs.isNotEmpty) {
-        collection.doc(result.docs.first.id).update(user.toJson());
-      } else {
-        collection.add(user);
-      }
+      final collection = FirebaseFirestore.instance.collection('users');
+      await collection.doc(user.id).set(user.toJson(), SetOptions(merge: true));
+      log('Firebase: User updated');
       return const Left(true);
     } catch (error, stack) {
       return Right(ErrorHandler.handleError(error, stackTrace: stack));

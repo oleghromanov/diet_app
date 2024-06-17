@@ -33,8 +33,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _initUser(InitUser event, Emitter<HomeState> emit) async {
     final user = event.user;
-    emit(state.copyWith(user: null));
     emit(state.copyWith(user: user));
+    emit(state.copyWith());
   }
 
   FutureOr<void> _onActionPressed(OnActionPressed event, Emitter<HomeState> emit) async {

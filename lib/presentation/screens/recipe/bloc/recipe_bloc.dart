@@ -12,11 +12,20 @@ part 'recipe_event.dart';
 part 'recipe_bloc.freezed.dart';
 
 class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
-  RecipeBloc({required Recipe recipe}) : super(RecipeState(recipe: recipe)) {
+  RecipeBloc({required Recipe recipe, bool inFavorite = false})
+      : super(RecipeState(
+          recipe: recipe,
+          inFavorite: inFavorite,
+        )) {
     on<Init>(_init);
+    on<InFavoriteChanged>(_inFavoriteChanged);
   }
 
   FutureOr<void> _init(Init event, Emitter<RecipeState> emit) {
     emit(state.copyWith());
+  }
+
+  FutureOr<void> _inFavoriteChanged(InFavoriteChanged event, Emitter<RecipeState> emit) {
+    emit(state.copyWith(inFavorite: !state.inFavorite));
   }
 }

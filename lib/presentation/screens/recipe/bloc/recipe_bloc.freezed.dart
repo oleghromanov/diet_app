@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RecipeState {
   Recipe get recipe => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get inFavorite => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RecipeStateCopyWith<RecipeState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $RecipeStateCopyWith<$Res> {
           RecipeState value, $Res Function(RecipeState) then) =
       _$RecipeStateCopyWithImpl<$Res, RecipeState>;
   @useResult
-  $Res call({Recipe recipe, bool isLoading});
+  $Res call({Recipe recipe, bool isLoading, bool inFavorite});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
   $Res call({
     Object? recipe = null,
     Object? isLoading = null,
+    Object? inFavorite = null,
   }) {
     return _then(_value.copyWith(
       recipe: null == recipe
@@ -57,6 +59,10 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      inFavorite: null == inFavorite
+          ? _value.inFavorite
+          : inFavorite // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -70,7 +76,7 @@ abstract class _$$RecipeStateImplCopyWith<$Res>
       __$$RecipeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Recipe recipe, bool isLoading});
+  $Res call({Recipe recipe, bool isLoading, bool inFavorite});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? recipe = null,
     Object? isLoading = null,
+    Object? inFavorite = null,
   }) {
     return _then(_$RecipeStateImpl(
       recipe: null == recipe
@@ -96,6 +103,10 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      inFavorite: null == inFavorite
+          ? _value.inFavorite
+          : inFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -103,17 +114,21 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RecipeStateImpl implements _RecipeState {
-  _$RecipeStateImpl({required this.recipe, this.isLoading = false});
+  _$RecipeStateImpl(
+      {required this.recipe, this.isLoading = false, this.inFavorite = false});
 
   @override
   final Recipe recipe;
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool inFavorite;
 
   @override
   String toString() {
-    return 'RecipeState(recipe: $recipe, isLoading: $isLoading)';
+    return 'RecipeState(recipe: $recipe, isLoading: $isLoading, inFavorite: $inFavorite)';
   }
 
   @override
@@ -123,11 +138,13 @@ class _$RecipeStateImpl implements _RecipeState {
             other is _$RecipeStateImpl &&
             (identical(other.recipe, recipe) || other.recipe == recipe) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.inFavorite, inFavorite) ||
+                other.inFavorite == inFavorite));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, recipe, isLoading);
+  int get hashCode => Object.hash(runtimeType, recipe, isLoading, inFavorite);
 
   @JsonKey(ignore: true)
   @override
@@ -137,13 +154,17 @@ class _$RecipeStateImpl implements _RecipeState {
 }
 
 abstract class _RecipeState implements RecipeState {
-  factory _RecipeState({required final Recipe recipe, final bool isLoading}) =
-      _$RecipeStateImpl;
+  factory _RecipeState(
+      {required final Recipe recipe,
+      final bool isLoading,
+      final bool inFavorite}) = _$RecipeStateImpl;
 
   @override
   Recipe get recipe;
   @override
   bool get isLoading;
+  @override
+  bool get inFavorite;
   @override
   @JsonKey(ignore: true)
   _$$RecipeStateImplCopyWith<_$RecipeStateImpl> get copyWith =>
@@ -155,32 +176,38 @@ mixin _$RecipeEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() inFavoriteChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function()? inFavoriteChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? inFavoriteChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InFavoriteChanged value) inFavoriteChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(InFavoriteChanged value)? inFavoriteChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InFavoriteChanged value)? inFavoriteChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -242,6 +269,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function() inFavoriteChanged,
   }) {
     return init();
   }
@@ -250,6 +278,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function()? inFavoriteChanged,
   }) {
     return init?.call();
   }
@@ -258,6 +287,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function()? inFavoriteChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -270,6 +300,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
+    required TResult Function(InFavoriteChanged value) inFavoriteChanged,
   }) {
     return init(this);
   }
@@ -278,6 +309,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
+    TResult? Function(InFavoriteChanged value)? inFavoriteChanged,
   }) {
     return init?.call(this);
   }
@@ -286,6 +318,7 @@ class _$InitImpl implements Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
+    TResult Function(InFavoriteChanged value)? inFavoriteChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -297,4 +330,106 @@ class _$InitImpl implements Init {
 
 abstract class Init implements RecipeEvent {
   const factory Init() = _$InitImpl;
+}
+
+/// @nodoc
+abstract class _$$InFavoriteChangedImplCopyWith<$Res> {
+  factory _$$InFavoriteChangedImplCopyWith(_$InFavoriteChangedImpl value,
+          $Res Function(_$InFavoriteChangedImpl) then) =
+      __$$InFavoriteChangedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$InFavoriteChangedImplCopyWithImpl<$Res>
+    extends _$RecipeEventCopyWithImpl<$Res, _$InFavoriteChangedImpl>
+    implements _$$InFavoriteChangedImplCopyWith<$Res> {
+  __$$InFavoriteChangedImplCopyWithImpl(_$InFavoriteChangedImpl _value,
+      $Res Function(_$InFavoriteChangedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$InFavoriteChangedImpl implements InFavoriteChanged {
+  const _$InFavoriteChangedImpl();
+
+  @override
+  String toString() {
+    return 'RecipeEvent.inFavoriteChanged()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$InFavoriteChangedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function() inFavoriteChanged,
+  }) {
+    return inFavoriteChanged();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function()? inFavoriteChanged,
+  }) {
+    return inFavoriteChanged?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function()? inFavoriteChanged,
+    required TResult orElse(),
+  }) {
+    if (inFavoriteChanged != null) {
+      return inFavoriteChanged();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(InFavoriteChanged value) inFavoriteChanged,
+  }) {
+    return inFavoriteChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(InFavoriteChanged value)? inFavoriteChanged,
+  }) {
+    return inFavoriteChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(InFavoriteChanged value)? inFavoriteChanged,
+    required TResult orElse(),
+  }) {
+    if (inFavoriteChanged != null) {
+      return inFavoriteChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InFavoriteChanged implements RecipeEvent {
+  const factory InFavoriteChanged() = _$InFavoriteChangedImpl;
 }

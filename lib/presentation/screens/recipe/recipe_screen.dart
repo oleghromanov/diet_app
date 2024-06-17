@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diet_app/app/resources/app_colors.dart';
@@ -23,15 +25,18 @@ class RecipeScreen extends StatefulWidget implements AutoRouteWrapper {
   const RecipeScreen({
     required this.recipe,
     this.isMyRecipe = true,
+    this.inFavorite = false,
     super.key,
   });
 
   final Recipe recipe;
   final bool isMyRecipe;
+  final bool inFavorite;
 
   @override
-  Widget wrappedRoute(context) => BlocProvider(
-        create: (context) => RecipeBloc(recipe: recipe),
+  Widget wrappedRoute(context) =>
+      BlocProvider(
+        create: (context) => RecipeBloc(recipe: recipe, inFavorite: inFavorite),
         child: this,
       );
 
@@ -44,60 +49,65 @@ class _RecipeScreenState extends State<RecipeScreen> {
   final double expandedBarHeight = 350.0;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) =>
+      Scaffold(
         body: SafeArea(
           child: _buildBody(context),
         ),
       );
 
-  Widget _buildBody(BuildContext context) => BlocBuilder<RecipeBloc, RecipeState>(
+  Widget _buildBody(BuildContext context) =>
+      BlocBuilder<RecipeBloc, RecipeState>(
         buildWhen: (previous, current) => previous.isLoading != current.isLoading,
-        builder: (context, state) => NestedScrollView(
-          physics: const BouncingScrollPhysics(),
-          headerSliverBuilder: (context, scrolled) => [
-            SliverAppBar(
-              expandedHeight: expandedBarHeight,
-              collapsedHeight: collapsedBarHeight,
-              leadingWidth: 64,
-              stretch: true,
-              pinned: true,
-              actions: [
-                _buildActions(state.recipe),
+        builder: (context, state) =>
+            NestedScrollView(
+              physics: const BouncingScrollPhysics(),
+              headerSliverBuilder: (context, scrolled) =>
+              [
+                SliverAppBar(
+                  expandedHeight: expandedBarHeight,
+                  collapsedHeight: collapsedBarHeight,
+                  leadingWidth: 64,
+                  stretch: true,
+                  pinned: true,
+                  actions: [
+                    _buildLike(),
+                    _buildActions(state.recipe),
+                  ],
+                  leading: _buildBackButton(),
+                  backgroundColor: AppColors.background,
+                  flexibleSpace: FlexibleSpaceBar(
+                    expandedTitleScale: 1,
+                    titlePadding: const EdgeInsets.symmetric(horizontal: 64),
+                    centerTitle: true,
+                    title: _buildTitle(state.recipe.label),
+                    background: _buildImage(state.recipe.image),
+                  ),
+                ),
               ],
-              leading: _buildBackButton(),
-              backgroundColor: AppColors.background,
-              flexibleSpace: FlexibleSpaceBar(
-                expandedTitleScale: 1,
-                titlePadding: const EdgeInsets.symmetric(horizontal: 64),
-                centerTitle: true,
-                title: _buildTitle(state.recipe.label),
-                background: _buildImage(state.recipe.image),
+              body: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+                children: [
+                  _buildRecipeInfo(state.recipe),
+                  const SizedBox(height: 8),
+                  const Divider(),
+                  const SizedBox(height: 8),
+                  _buildSubTitle("${LocaleKeys.ingredients.tr()}:"),
+                  const SizedBox(height: 4),
+                  const Text(LocaleKeys.yield, style: AppTextStyles.boldText).plural(state.recipe.yield.toInt()),
+                  const SizedBox(height: 8),
+                  _buildIngredients(state.recipe.ingredientLines),
+                  const SizedBox(height: 8),
+                  const Divider(),
+                  const SizedBox(height: 8),
+                  _buildSubTitle("${LocaleKeys.instruction.tr()}:"),
+                  const SizedBox(height: 4),
+                  state.recipe.instructions != null
+                      ? _buildInstructions(state.recipe.instructions!)
+                      : _buildLink(state.recipe.url),
+                ],
               ),
             ),
-          ],
-          body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
-            children: [
-              _buildRecipeInfo(state.recipe),
-              const SizedBox(height: 8),
-              const Divider(),
-              const SizedBox(height: 8),
-              _buildSubTitle("${LocaleKeys.ingredients.tr()}:"),
-              const SizedBox(height: 4),
-              const Text(LocaleKeys.yield, style: AppTextStyles.boldText).plural(state.recipe.yield.toInt()),
-              const SizedBox(height: 8),
-              _buildIngredients(state.recipe.ingredientLines),
-              const SizedBox(height: 8),
-              const Divider(),
-              const SizedBox(height: 8),
-              _buildSubTitle("${LocaleKeys.instruction.tr()}:"),
-              const SizedBox(height: 4),
-              state.recipe.instructions != null
-                  ? _buildInstructions(state.recipe.instructions!)
-                  : _buildLink(state.recipe.url),
-            ],
-          ),
-        ),
       );
 
   Widget _buildActions(Recipe recipe) {
@@ -115,14 +125,16 @@ class _RecipeScreenState extends State<RecipeScreen> {
           onSavePressed: (newPosition) {
             context.router.pop();
             if (position == newPosition) return;
-            user = user.copyWith(mealPlan:user.changePositions(recipe: recipe, newPosition: newPosition, position: position));
+            user = user.copyWith(
+                mealPlan: user.changePositions(recipe: recipe, newPosition: newPosition, position: position));
             navigationBloc.add(NavigationEvent.userChanged(user));
           },
         );
       },
-      itemBuilder: (BuildContext context) => [
-        widget.isMyRecipe ? LocaleKeys.changePosition.tr() : LocaleKeys.addToPlan.tr()
-      ].map((e) => _buildActionButton(e)).toList(),
+      itemBuilder: (BuildContext context) =>
+          [
+            widget.isMyRecipe ? LocaleKeys.changePosition.tr() : LocaleKeys.addToPlan.tr()
+          ].map((e) => _buildActionButton(e)).toList(),
       child: const Icon(
         Icons.more_vert_outlined,
         color: AppColors.onPrimary,
@@ -131,7 +143,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
     );
   }
 
-  PopupMenuItem<String> _buildActionButton(String action) => PopupMenuItem<String>(
+  PopupMenuItem<String> _buildActionButton(String action) =>
+      PopupMenuItem<String>(
         value: action,
         child: Container(
           padding: const EdgeInsets.only(bottom: 10, top: 10),
@@ -150,7 +163,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ),
       );
 
-  Widget _buildBackButton() => GestureDetector(
+  Widget _buildBackButton() =>
+      GestureDetector(
         onTap: () {
           context.router.pop();
         },
@@ -172,7 +186,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ),
       );
 
-  Widget _buildTitle(String text) => Text(
+  Widget _buildTitle(String text) =>
+      Text(
         text,
         style: AppTextStyles.subTitle.copyWith(
           shadows: <Shadow>[
@@ -186,12 +201,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
         textAlign: TextAlign.center,
       );
 
-  Widget _buildSubTitle(String text) => Text(
+  Widget _buildSubTitle(String text) =>
+      Text(
         text,
         style: AppTextStyles.description,
       );
 
-  Widget _buildIngredients(List<String> ingredients) => ListView.separated(
+  Widget _buildIngredients(List<String> ingredients) =>
+      ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -200,7 +217,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
         itemCount: ingredients.length,
       );
 
-  Widget _buildInstructions(List<String> instructions) => ListView.separated(
+  Widget _buildInstructions(List<String> instructions) =>
+      ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -209,7 +227,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
         itemCount: instructions.length,
       );
 
-  Widget _buildLink(String url) => Column(
+  Widget _buildLink(String url) =>
+      Column(
         children: [
           const Text(
             LocaleKeys.linkRecipeDescription,
@@ -225,17 +244,20 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ],
       );
 
-  Widget _buildText(String text) => Text(
+  Widget _buildText(String text) =>
+      Text(
         text,
         style: AppTextStyles.text,
       );
 
-  Widget _buildImage(String image) => CachedNetworkImage(
+  Widget _buildImage(String image) =>
+      CachedNetworkImage(
         imageUrl: image,
         fit: BoxFit.cover,
       );
 
-  Widget _buildRecipeInfo(Recipe recipe) => Column(
+  Widget _buildRecipeInfo(Recipe recipe) =>
+      Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildCalories(recipe),
@@ -257,12 +279,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ],
       );
 
-  Widget _buildCalories(Recipe recipe) => Text(
+  Widget _buildCalories(Recipe recipe) =>
+      Text(
         "${(recipe.calories / recipe.yield).floor()} ${LocaleKeys.kcal.tr()}",
         style: AppTextStyles.description,
       );
 
-  Widget _buildNutrient(String label, int quantity) => Row(
+  Widget _buildNutrient(String label, int quantity) =>
+      Row(
         children: [
           Text(
             label.toLowerCase().tr(),
@@ -276,6 +300,22 @@ class _RecipeScreenState extends State<RecipeScreen> {
         ],
       );
 
+  Widget _buildLike() =>  BlocBuilder<RecipeBloc, RecipeState>(
+      buildWhen: (previous, current) => previous.inFavorite != current.inFavorite,
+      builder: (context, state) =>
+      GestureDetector(
+        onTap: () {
+          NavigationBloc navigationBloc = Injector.instance();
+          navigationBloc.add(NavigationEvent.onLikeClicked(widget.recipe));
+          context.read<RecipeBloc>().add(const RecipeEvent.inFavoriteChanged());
+        },
+        child: SvgPicture.asset(
+          state.inFavorite ? Assets.icons.heartFill : Assets.icons.heart,
+          height: 48,
+          width: 48,
+        ),
+      ));
+
   void _showAddRecipeModal({
     required int countDays,
     PositionModel? position,
@@ -283,14 +323,15 @@ class _RecipeScreenState extends State<RecipeScreen> {
   }) {
     showDialog(
       context: context,
-      builder: (BuildContext context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        child: AddRecipeModal(
-          countDays: countDays,
-          position: position,
-          onSavePressed: onSavePressed,
-        ),
-      ),
+      builder: (BuildContext context) =>
+          Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            child: AddRecipeModal(
+              countDays: countDays,
+              position: position,
+              onSavePressed: onSavePressed,
+            ),
+          ),
     );
   }
 }

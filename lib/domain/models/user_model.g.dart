@@ -7,6 +7,7 @@ part of 'user_model.dart';
 // **************************************************************************
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
+      id: json['id'] as String,
       name: json['name'] as String,
       email: json['email'] as String,
       mealPlan: (json['mealPlan'] as List<dynamic>)
@@ -19,9 +20,13 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
           .map((e) => $enumDecode(_$DietTypeEnumMap, e))
           .toList(),
       countDays: json['countDays'] as int,
+      favourites: (json['favourites'] as List<dynamic>)
+          .map((e) => Recipe.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'email': instance.email,
       'mealPlan': instance.mealPlan.map((e) => e.toJson()).toList(),
@@ -29,6 +34,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
           instance.allergies.map((e) => _$AllergyTypeEnumMap[e]!).toList(),
       'diets': instance.diets.map((e) => _$DietTypeEnumMap[e]!).toList(),
       'countDays': instance.countDays,
+      'favourites': instance.favourites.map((e) => e.toJson()).toList(),
     };
 
 const _$AllergyTypeEnumMap = {

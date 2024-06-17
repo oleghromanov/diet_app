@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:uuid/uuid.dart';
 import 'package:diet_app/app/navigation/app_router.gr.dart';
 import 'package:diet_app/core/errors/app_errors.dart';
 import 'package:diet_app/core/models/app_action.dart';
@@ -195,7 +196,9 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   FutureOr<void> _signUpUser(List<DayPlanModel> plans, Emitter<RegistrationState> emit) async {
     bool success = false;
     AppError? error;
+
     UserModel user = UserModel(
+      id: const Uuid().v1(),
       email: state.email,
       name: state.name,
       mealPlan: plans,
@@ -203,7 +206,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       diets: state.diets,
       countDays: state.countDays ?? 7,
     );
-    final result = await authRepository.signUp(user: user);
+    final result = await authRepository.setUser(user: user);
 
     result.fold(
       (data) => success = data,

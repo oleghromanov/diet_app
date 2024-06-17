@@ -84,5 +84,6 @@ abstract class  LocaleKeys {
   static const addRecipe = 'addRecipe';
   static const changePosition = 'changePosition';
   static const save = 'save';
+  static const favourites = 'favourites';
 
 }

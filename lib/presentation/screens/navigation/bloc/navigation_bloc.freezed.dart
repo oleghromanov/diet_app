@@ -175,18 +175,21 @@ mixin _$NavigationEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(UserModel user) userChanged,
+    required TResult Function(Recipe recipe) onLikeClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function(UserModel user)? userChanged,
+    TResult? Function(Recipe recipe)? onLikeClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(UserModel user)? userChanged,
+    TResult Function(Recipe recipe)? onLikeClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -194,18 +197,21 @@ mixin _$NavigationEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(UserChanged value) userChanged,
+    required TResult Function(OnLikeClicked value) onLikeClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(UserChanged value)? userChanged,
+    TResult? Function(OnLikeClicked value)? onLikeClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(UserChanged value)? userChanged,
+    TResult Function(OnLikeClicked value)? onLikeClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -268,6 +274,7 @@ class _$InitImpl implements Init {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(UserModel user) userChanged,
+    required TResult Function(Recipe recipe) onLikeClicked,
   }) {
     return init();
   }
@@ -277,6 +284,7 @@ class _$InitImpl implements Init {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function(UserModel user)? userChanged,
+    TResult? Function(Recipe recipe)? onLikeClicked,
   }) {
     return init?.call();
   }
@@ -286,6 +294,7 @@ class _$InitImpl implements Init {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(UserModel user)? userChanged,
+    TResult Function(Recipe recipe)? onLikeClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -299,6 +308,7 @@ class _$InitImpl implements Init {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(UserChanged value) userChanged,
+    required TResult Function(OnLikeClicked value) onLikeClicked,
   }) {
     return init(this);
   }
@@ -308,6 +318,7 @@ class _$InitImpl implements Init {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(UserChanged value)? userChanged,
+    TResult? Function(OnLikeClicked value)? onLikeClicked,
   }) {
     return init?.call(this);
   }
@@ -317,6 +328,7 @@ class _$InitImpl implements Init {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(UserChanged value)? userChanged,
+    TResult Function(OnLikeClicked value)? onLikeClicked,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -396,6 +408,7 @@ class _$UserChangedImpl implements UserChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() init,
     required TResult Function(UserModel user) userChanged,
+    required TResult Function(Recipe recipe) onLikeClicked,
   }) {
     return userChanged(user);
   }
@@ -405,6 +418,7 @@ class _$UserChangedImpl implements UserChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
     TResult? Function(UserModel user)? userChanged,
+    TResult? Function(Recipe recipe)? onLikeClicked,
   }) {
     return userChanged?.call(user);
   }
@@ -414,6 +428,7 @@ class _$UserChangedImpl implements UserChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
     TResult Function(UserModel user)? userChanged,
+    TResult Function(Recipe recipe)? onLikeClicked,
     required TResult orElse(),
   }) {
     if (userChanged != null) {
@@ -427,6 +442,7 @@ class _$UserChangedImpl implements UserChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(Init value) init,
     required TResult Function(UserChanged value) userChanged,
+    required TResult Function(OnLikeClicked value) onLikeClicked,
   }) {
     return userChanged(this);
   }
@@ -436,6 +452,7 @@ class _$UserChangedImpl implements UserChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Init value)? init,
     TResult? Function(UserChanged value)? userChanged,
+    TResult? Function(OnLikeClicked value)? onLikeClicked,
   }) {
     return userChanged?.call(this);
   }
@@ -445,6 +462,7 @@ class _$UserChangedImpl implements UserChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Init value)? init,
     TResult Function(UserChanged value)? userChanged,
+    TResult Function(OnLikeClicked value)? onLikeClicked,
     required TResult orElse(),
   }) {
     if (userChanged != null) {
@@ -460,5 +478,144 @@ abstract class UserChanged implements NavigationEvent {
   UserModel get user;
   @JsonKey(ignore: true)
   _$$UserChangedImplCopyWith<_$UserChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OnLikeClickedImplCopyWith<$Res> {
+  factory _$$OnLikeClickedImplCopyWith(
+          _$OnLikeClickedImpl value, $Res Function(_$OnLikeClickedImpl) then) =
+      __$$OnLikeClickedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Recipe recipe});
+}
+
+/// @nodoc
+class __$$OnLikeClickedImplCopyWithImpl<$Res>
+    extends _$NavigationEventCopyWithImpl<$Res, _$OnLikeClickedImpl>
+    implements _$$OnLikeClickedImplCopyWith<$Res> {
+  __$$OnLikeClickedImplCopyWithImpl(
+      _$OnLikeClickedImpl _value, $Res Function(_$OnLikeClickedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? recipe = null,
+  }) {
+    return _then(_$OnLikeClickedImpl(
+      null == recipe
+          ? _value.recipe
+          : recipe // ignore: cast_nullable_to_non_nullable
+              as Recipe,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OnLikeClickedImpl implements OnLikeClicked {
+  const _$OnLikeClickedImpl(this.recipe);
+
+  @override
+  final Recipe recipe;
+
+  @override
+  String toString() {
+    return 'NavigationEvent.onLikeClicked(recipe: $recipe)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnLikeClickedImpl &&
+            (identical(other.recipe, recipe) || other.recipe == recipe));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, recipe);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnLikeClickedImplCopyWith<_$OnLikeClickedImpl> get copyWith =>
+      __$$OnLikeClickedImplCopyWithImpl<_$OnLikeClickedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(UserModel user) userChanged,
+    required TResult Function(Recipe recipe) onLikeClicked,
+  }) {
+    return onLikeClicked(recipe);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(UserModel user)? userChanged,
+    TResult? Function(Recipe recipe)? onLikeClicked,
+  }) {
+    return onLikeClicked?.call(recipe);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(UserModel user)? userChanged,
+    TResult Function(Recipe recipe)? onLikeClicked,
+    required TResult orElse(),
+  }) {
+    if (onLikeClicked != null) {
+      return onLikeClicked(recipe);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Init value) init,
+    required TResult Function(UserChanged value) userChanged,
+    required TResult Function(OnLikeClicked value) onLikeClicked,
+  }) {
+    return onLikeClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Init value)? init,
+    TResult? Function(UserChanged value)? userChanged,
+    TResult? Function(OnLikeClicked value)? onLikeClicked,
+  }) {
+    return onLikeClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Init value)? init,
+    TResult Function(UserChanged value)? userChanged,
+    TResult Function(OnLikeClicked value)? onLikeClicked,
+    required TResult orElse(),
+  }) {
+    if (onLikeClicked != null) {
+      return onLikeClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnLikeClicked implements NavigationEvent {
+  const factory OnLikeClicked(final Recipe recipe) = _$OnLikeClickedImpl;
+
+  Recipe get recipe;
+  @JsonKey(ignore: true)
+  _$$OnLikeClickedImplCopyWith<_$OnLikeClickedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

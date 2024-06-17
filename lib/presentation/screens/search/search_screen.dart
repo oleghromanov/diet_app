@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:diet_app/app/navigation/app_router.gr.dart';
+import 'package:diet_app/domain/dto/recipe.dart';
+import 'package:diet_app/domain/models/user_model.dart';
 import 'package:diet_app/gen/assets.gen.dart';
+import 'package:diet_app/presentation/screens/navigation/bloc/navigation_bloc.dart';
 import 'package:diet_app/presentation/widgets/buttons/app_button.dart';
 import 'package:diet_app/presentation/widgets/inputs/app_input.dart';
 import 'package:diet_app/presentation/widgets/items/recipe_item.dart';
@@ -26,28 +31,37 @@ class _SearchScreenState extends State<SearchScreen> {
       );
 
   Widget _buildBody(BuildContext context) => Column(
-          children: [
-            _buildSearchInput(),
-            Expanded(child: _buildRecipes()),
-          ],
+        children: [
+          _buildSearchInput(),
+          Expanded(child: _buildRecipes()),
+        ],
       );
 
   Widget _buildRecipes() => BlocBuilder<SearchBloc, SearchState>(
-        buildWhen: (previous, current) => previous.recipes != current.recipes,
+        buildWhen: (previous, current) =>
+            previous.recipes != current.recipes || previous.user != current.user,
         builder: (context, state) => ListView.separated(
           padding: const EdgeInsets.only(bottom: 100, top: 25),
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) => RecipeItem(
-            state.recipes[index],
-            onPressed: () {
-              context.router.push(
-                RecipeRouter(
-                  recipe: state.recipes[index],
-                  isMyRecipe: state.user?.recipes.contains(state.recipes[index]) ?? false,
-                ),
-              );
-            },
-          ),
+          itemBuilder: (BuildContext context, int index) {
+            bool inFavorite = state.user?.favourites.any((recipe) => recipe.uri == state.recipes[index].uri) ?? false;
+            return RecipeItem(
+              state.recipes[index],
+              inFavorite: inFavorite,
+              onLikePressed: () {
+                if (state.user != null) {
+                  context.read<NavigationBloc>().add(NavigationEvent.onLikeClicked(state.recipes[index]));
+                }
+              },
+              onPressed: () {
+                context.router.push(
+                  RecipeRouter(
+                    recipe: state.recipes[index],
+                    isMyRecipe: state.user?.recipes.contains(state.recipes[index]) ?? false,
+                  ),
+                );
+              },
+            );
+          },
           itemCount: state.recipes.length,
           separatorBuilder: (BuildContext context, int index) => const Divider(),
         ),
@@ -59,7 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
           onChanged: (text) {
             context.read<SearchBloc>().add(SearchEvent.onSearchTextChanged(text));
           },
-          onSubmitted: (text){
+          onSubmitted: (text) {
             context.read<SearchBloc>().add(const SearchEvent.onSearchClicked());
           },
           suffixIcon: AppButton(

@@ -108,42 +108,60 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
 
-  Widget _buildPlan(DayPlanModel plan, int index) => Padding(
-        padding: const EdgeInsets.all(9),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildTitle("${LocaleKeys.day.tr()} ${index + 1}"),
-            const SizedBox(height: 12),
-            _buildSubTitle(LocaleKeys.breakfast.tr()),
-            const SizedBox(height: 8),
-            RecipeItem(
-              plan.breakfast,
-              onPressed: () {
-                context.router.push(RecipeRouter(recipe: plan.breakfast));
-              },
-            ),
-            const SizedBox(height: 24),
-            _buildSubTitle(
-              LocaleKeys.lunch.tr(),
-            ),
-            const SizedBox(height: 12),
-            RecipeItem(
-              plan.lunch,
-              onPressed: () {
-                context.router.push(RecipeRouter(recipe: plan.lunch));
-              },
-            ),
-            const SizedBox(height: 24),
-            _buildSubTitle(LocaleKeys.dinner.tr()),
-            const SizedBox(height: 12),
-            RecipeItem(
-              plan.dinner,
-              onPressed: () {
-                context.router.push(RecipeRouter(recipe: plan.dinner));
-              },
-            ),
-          ],
+  Widget _buildPlan(DayPlanModel plan, int index) => BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) => previous.user != current.user,
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.all(9),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildTitle("${LocaleKeys.day.tr()} ${index + 1}"),
+              const SizedBox(height: 12),
+              _buildSubTitle(LocaleKeys.breakfast.tr()),
+              const SizedBox(height: 8),
+              RecipeItem(
+                plan.breakfast,
+                onPressed: () {
+                  context.router.push(
+                    RecipeRouter(
+                      recipe: plan.breakfast,
+                      inFavorite: state.user?.favourites.any((recipe) => recipe.uri == plan.breakfast.uri) ?? false,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              _buildSubTitle(
+                LocaleKeys.lunch.tr(),
+              ),
+              const SizedBox(height: 12),
+              RecipeItem(
+                plan.lunch,
+                onPressed: () {
+                  context.router.push(
+                    RecipeRouter(
+                      recipe: plan.lunch,
+                      inFavorite: state.user?.favourites.any((recipe) => recipe.uri == plan.lunch.uri) ?? false,
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              _buildSubTitle(LocaleKeys.dinner.tr()),
+              const SizedBox(height: 12),
+              RecipeItem(
+                plan.dinner,
+                onPressed: () {
+                  context.router.push(
+                    RecipeRouter(
+                      recipe: plan.dinner,
+                      inFavorite: state.user?.favourites.any((recipe) => recipe.uri == plan.dinner.uri) ?? false,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       );
 

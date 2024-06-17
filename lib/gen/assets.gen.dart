@@ -15,6 +15,18 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_left.svg
   String get arrowLeft => 'assets/icons/arrow_left.svg';
 
+  /// File path: assets/icons/folder_favorite.svg
+  String get folderFavorite => 'assets/icons/folder_favorite.svg';
+
+  /// File path: assets/icons/folder_favorite_fill.svg
+  String get folderFavoriteFill => 'assets/icons/folder_favorite_fill.svg';
+
+  /// File path: assets/icons/heart.svg
+  String get heart => 'assets/icons/heart.svg';
+
+  /// File path: assets/icons/heart_fill.svg
+  String get heartFill => 'assets/icons/heart_fill.svg';
+
   /// File path: assets/icons/home.svg
   String get home => 'assets/icons/home.svg';
 
@@ -31,8 +43,18 @@ class $AssetsIconsGen {
   String get search => 'assets/icons/search.svg';
 
   /// List of all assets
-  List<String> get values =>
-      [arrowLeft, home, homeFill, receiptSearch, receiptSearchFill, search];
+  List<String> get values => [
+        arrowLeft,
+        folderFavorite,
+        folderFavoriteFill,
+        heart,
+        heartFill,
+        home,
+        homeFill,
+        receiptSearch,
+        receiptSearchFill,
+        search
+      ];
 }
 
 class $AssetsImagesGen {

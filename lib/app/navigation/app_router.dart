@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:diet_app/presentation/screens/auth/auth_screen.dart';
+import 'package:diet_app/presentation/screens/favourites/favourites_screen.dart';
 import 'package:diet_app/presentation/screens/home/home_screen.dart';
 import 'package:diet_app/presentation/screens/navigation/navigation_screen.dart';
 import 'package:diet_app/presentation/screens/recipe/recipe_screen.dart';
@@ -37,6 +38,11 @@ import 'package:diet_app/presentation/screens/search/search_screen.dart';
           path: 'search',
           name: 'SearchRouter',
           page: SearchScreen,
+        ),
+        AutoRoute(
+          path: 'favourites',
+          name: 'FavouritesRouter',
+          page: FavouritesScreen,
         ),
       ],
     ),

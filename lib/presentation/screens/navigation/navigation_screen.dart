@@ -3,6 +3,7 @@ import 'package:diet_app/app/navigation/app_router.gr.dart';
 import 'package:diet_app/app/resources/app_colors.dart';
 import 'package:diet_app/di/injector.dart';
 import 'package:diet_app/gen/assets.gen.dart';
+import 'package:diet_app/presentation/screens/favourites/bloc/favourites_bloc.dart';
 import 'package:diet_app/presentation/screens/home/bloc/home_bloc.dart';
 import 'package:diet_app/presentation/screens/search/bloc/search_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,9 +19,11 @@ class NavigationScreen extends StatefulWidget implements AutoRouteWrapper {
   Widget wrappedRoute(context) {
     final homeBloc = HomeBloc();
     final searchBloc = SearchBloc();
+    final favouritesBloc = FavouritesBloc();
     final navigationBloc = NavigationBloc(
       homeBloc: homeBloc,
       searchBloc: searchBloc,
+      favouritesBloc: favouritesBloc,
     );
     Injector.initNavigationBloc(navigationBloc);
     return MultiBlocProvider(
@@ -30,6 +33,9 @@ class NavigationScreen extends StatefulWidget implements AutoRouteWrapper {
         ),
         BlocProvider(
           create: (context) => searchBloc,
+        ),
+        BlocProvider(
+          create: (context) => favouritesBloc,
         ),
         BlocProvider(
           create: (context) => navigationBloc,
@@ -53,6 +59,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         routes: const [
           HomeRouter(),
           SearchRouter(),
+          FavouritesRouter(),
         ],
         builder: (context, child, animation) {
           return child;
@@ -71,16 +78,13 @@ class _NavigationScreenState extends State<NavigationScreen> {
               ),
               BottomNavigationBarItem(
                 label: '',
-                icon: SvgPicture.asset(
-                  Assets.icons.receiptSearch,
-                  height: 38,
-                  width: 38,
-                ),
-                activeIcon: SvgPicture.asset(
-                  Assets.icons.receiptSearchFill,
-                  height: 38,
-                  width: 38,
-                ),
+                icon: SvgPicture.asset(Assets.icons.receiptSearch),
+                activeIcon: SvgPicture.asset(Assets.icons.receiptSearchFill),
+              ),
+              BottomNavigationBarItem(
+                label: '',
+                icon: SvgPicture.asset(Assets.icons.folderFavorite),
+                activeIcon: SvgPicture.asset(Assets.icons.folderFavoriteFill),
               ),
             ],
           );

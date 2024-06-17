@@ -16,7 +16,7 @@ class CodegenLoader extends AssetLoader{
 
   static const Map<String,dynamic> ru = {
   "welcome": "Добро пожаловать!",
-  "authDescription": "Мы подберем план питания\nспециально для тебя",
+  "authDescription": "Мы подберем план\nпитания специально для\nтебя",
   "signIn": "Войти",
   "registration": "Регистрация",
   "email": "Почта",
@@ -47,9 +47,9 @@ class CodegenLoader extends AssetLoader{
   "treeNutFree": "Без древесных орехов",
   "wheatFree": "Без пшеницы",
   "FODMAPFree": "Без FODMAP",
-  "immunoSupportive": "Иммуносупрессивный",
-  "alcoholFree": "Безалкогольный",
-  "balanced": "Сбалансированный",
+  "immunoSupportive": "Иммуносупрессивная",
+  "alcoholFree": "Безалкогольная",
+  "balanced": "Сбалансированная",
   "highFiber": "Много клетчатки",
   "highProtein": "Много белка",
   "keto": "Кето-диета",
@@ -59,14 +59,14 @@ class CodegenLoader extends AssetLoader{
   "lowFat": "Обезжиренный",
   "lowPotassium": "Мало калия",
   "lowSodium": "Мало натрия",
-  "mediterranean": "Средиземноморский",
+  "mediterranean": "Средиземноморская",
   "noOilAdded": "без добавления масла",
   "noSugar": "Без сахара",
   "paleo": "Палео",
-  "pescatarian": "Пескетарианский",
+  "pescatarian": "Пескетарианская",
   "porkFree": "Без свинины",
   "redMeatFree": "Без красного мяса",
-  "sugarConscious": "Без сахара",
+  "sugarConscious": "Мало сахара",
   "vegan": "Веган",
   "vegetarian": "Вегетарианец",
   "molluskFree": "Без моллюсков",
@@ -102,7 +102,8 @@ class CodegenLoader extends AssetLoader{
   "addToPlan": "Добавить в план",
   "addRecipe": "Добавить рецепт",
   "changePosition": "Изменить позицию",
-  "save": "Сохранить"
+  "save": "Сохранить",
+  "favourites": "Избранное"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ru": ru};
 }
